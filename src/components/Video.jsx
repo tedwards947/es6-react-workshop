@@ -3,6 +3,7 @@ import URI from 'urijs';
 
 export default class Video extends React.Component {
     constructor() {
+        super();
         this.VIDEO_TYPES = {
             'mp4': 'video/mp4',
             'ogg': 'video/ogg',
@@ -46,9 +47,9 @@ export default class Video extends React.Component {
     }
 }
 
-Video.propTypes = {
-    poster: React.propTypes.string,
-    sources: React.propTypes.arrayOf(
-        React.propTypes.string.isRequired
+Video.PropTypes = {
+    poster: React.PropTypes.string,
+    sources: React.PropTypes.arrayOf(
+        React.PropTypes.string.isRequired
     ).isRequired
 };

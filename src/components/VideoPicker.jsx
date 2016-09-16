@@ -20,6 +20,6 @@ export default class VideoPicker extends React.Component {
     }
 }
 
-VideoPicker.propTypes = {
-    children: React.propTypes.element.isRequired
+VideoPicker.PropTypes = {
+    children: React.PropTypes.element.isRequired
 };

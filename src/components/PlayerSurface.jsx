@@ -20,6 +20,6 @@ export default class PlayerSurface extends React.Component {
     }
 }
 
-PlayerSurface.propTypes = {
+PlayerSurface.PropTypes = {
 
 };

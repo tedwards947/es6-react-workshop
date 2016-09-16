@@ -64,3 +64,9 @@ Copy the data file from ~`LOCATION`~ and put it in `src/data/data.json`.
 
 
 
+
+
+
+# put attribution for help here:
+https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app
+# wtf is super()?

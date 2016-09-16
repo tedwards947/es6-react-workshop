@@ -18,13 +18,13 @@ export default class Thumbnail extends React.Component {
 }
 
 
-Thumbnail.propTypes = {
-    url: React.propTypes.string.isRequired,
-    title: React.propTypes.string.isRequired,
+Thumbnail.PropTypes = {
+    url: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired,
     id: React.PropTypes.oneOfType([
         //we'll let id be either a string or a number
         React.PropTypes.string,
         React.PropTypes.number
     ]).isRequired,
-    onThumbClick: React.propTypes.func
+    onThumbClick: React.PropTypes.func
 };

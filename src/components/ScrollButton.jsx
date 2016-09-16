@@ -30,7 +30,7 @@ export default class ScrollButton extends React.Component {
     }
 }
 
-ScrollButton.propTypes = {
-    direction: React.propTypes.string.isRequired,
-    onScrollClick: React.propTypes.func.isRequred
+ScrollButton.PropTypes = {
+    direction: React.PropTypes.string.isRequired,
+    onScrollClick: React.PropTypes.func.isRequred
 };
