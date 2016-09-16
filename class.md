@@ -17,7 +17,9 @@
         npm install --save-dev webpack@1.13.x babel-loader@6.2.x http-server@0.9.x
 
 
-## HTML First
+## Some Setup
+
+### HTML
 
 \<description here\> place to host it yadayadayada
 
@@ -39,12 +41,17 @@
         <!--This is where React will hook into the document-->
         <div id="main"></div>
 
-        
+
         <!--Commented out for later-->
         <!--<script src="/js/main.js"></script>-->
     </body>
     </html>
 ```
+
+### Data
+
+Copy the data file from ~`LOCATION`~ and put it in `src/data/data.json`.
+
 
 
 
