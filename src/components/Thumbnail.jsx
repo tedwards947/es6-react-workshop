@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 
 export default class Thumbnail extends React.Component {
     render() {
+
+        //notice the arrow function which allows us to pass this.props.id to the click handler function
         return (
             <div className="thumbnail-wrapper" onClick={() => {this.props.onThumbClick(this.props.id)}}>
 

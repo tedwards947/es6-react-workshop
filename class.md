@@ -6,15 +6,17 @@
 
         npm init -f
 
+# UPDATE THESE TO EXACT SEMVERS!
+
 * Install **babel**, **express**, **react**, and **react-router**:
 
         npm install --save babel-cli@6.11.x babel-core@6.13.x  \
             babel-preset-es2015@6.13.x babel-preset-react@6.11.x ejs@2.5.x \
             express@4.14.x react@15.3.x react-dom@15.3.x react-router@2.6.x
 
-* Install other fun stuff like **classnames**
+* Install other fun stuff like **classnames**, **urijs**
 
-        npm install --save classnames
+        npm install --save classnames urijs@1.18.x
 
 * Install **webpack** and **http-server** as development dependencies:
 

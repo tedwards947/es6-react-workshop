@@ -19,20 +19,12 @@ export default class ScrollButton extends React.Component {
             'scroll-button-right': this.props.direction === 'right'
         });
 
-        /* 
-        notice the arrow function to pass the direction to getButtonLabel()
-        this is a contrived example. a more practical solution would be to do 
+        const buttonValue = this.getButtonLabel(this.props.direction);
 
-            const buttonValue = this.getButtonLabel(this.props.direction);
-            
-        in the render() method and then refer to it directly within the tag:
-
-            value={buttonValue}
-        */
         return (
             <input type="button"
                    className={classes}
-                   value={() => {this.getButtonLabel(this.props.direction);}} 
+                   value={buttonValue} 
                    onClick={this.props.onScrollClick} />
         );
     }

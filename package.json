@@ -26,7 +26,8 @@
     "express": "^4.14.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
-    "react-router": "^2.6.1"
+    "react-router": "^2.6.1",
+    "urijs": "^1.18.1"
   },
   "devDependencies": {
     "babel-loader": "^6.2.5",
