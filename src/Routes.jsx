@@ -8,9 +8,9 @@ import PlayerSurface from './components/PlayerSurface.jsx';
 const routes = (
   <Route path="/" component={Layout}>
     <IndexRoute component={Home}/>
-    {/*<Route path="video/" component={PlayerSurface} />*/}
+    <Route path="video" component={PlayerSurface} />
     <Route path="video/:id" component={PlayerSurface} />
-    <Route path="*" component={PlayerSurface}/>
+    {/*<Route path="*" component={404}/> */}
   </Route>
 );
 

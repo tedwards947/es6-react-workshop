@@ -18,7 +18,7 @@
 
         npm install --save classnames urijs@1.18.x
 
-* Install **webpack** and **http-server** as development dependencies:
+* Install **webpack**, **babel-loader**, and **http-server** as development dependencies:
 
         npm install --save-dev webpack@1.13.x babel-loader@6.2.x http-server@0.9.x
 

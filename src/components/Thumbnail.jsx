@@ -1,14 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router';
+import classNames from 'classnames';
 
 export default class Thumbnail extends React.Component {
     render() {
 
+        const classes = classNames('thumbnail-wrapper', {
+            'thumbnail-clickable': !!this.props.onThumbClick,
+            'thumbnail-active': this.props.isActive
+        });
+
         //notice the arrow function which allows us to pass this.props.id to the click handler function
         return (
-            <div className="thumbnail-wrapper" onClick={() => {this.props.onThumbClick(this.props.id)}}>
+            <div className={classes} onClick={() => {this.props.onThumbClick(this.props.id)}}>
 
-                <img src={this.props.url} alt={this.props.title} />
+                <img src={this.props.imgUrl} alt={this.props.title} />
                 
                 <span className="thumbnail-title">{this.props.title}</span>
                
@@ -19,12 +25,13 @@ export default class Thumbnail extends React.Component {
 
 
 Thumbnail.PropTypes = {
-    url: React.PropTypes.string.isRequired,
+    imgUrl: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
     id: React.PropTypes.oneOfType([
         //we'll let id be either a string or a number
         React.PropTypes.string,
         React.PropTypes.number
     ]).isRequired,
-    onThumbClick: React.PropTypes.func
+    onThumbClick: React.PropTypes.func,
+    isActive: React.PropTypes.bool
 };

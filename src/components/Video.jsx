@@ -29,8 +29,8 @@ export default class Video extends React.Component {
     render() {
         return (
             <div className="video-wrapper">
-
-                <video controls poster={this.props.poster}>
+                <h3>{this.props.title}</h3>
+                <video controls poster={this.props.poster} height="700" width="1200">
 
                     {/* will render _n_ <source/> elements. note the special key property. */}
                     {this.props.sources.map((source, idx) => {
@@ -51,5 +51,6 @@ Video.PropTypes = {
     poster: React.PropTypes.string,
     sources: React.PropTypes.arrayOf(
         React.PropTypes.string.isRequired
-    ).isRequired
+    ).isRequired,
+    title: React.PropTypes.string
 };

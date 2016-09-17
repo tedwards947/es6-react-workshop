@@ -1,0 +1,98 @@
+body {
+    background:black;
+    color:white;
+    margin:0;
+    padding:0;
+
+    font-family: 'Helvetica', 'sans-serif';
+}
+
+a:link{
+    color:white;
+}
+a:visited{
+    color:white;
+}
+header{
+    padding:20px;
+    background:#333;
+}
+.content{
+    padding:20px;
+}
+footer{
+    padding:20px;
+    background:#333;
+    color:gray;
+}
+
+.video-picker{
+    padding: 10px 0;
+    position:relative;
+}
+.video-picker-thumbnails {
+    overflow-y: hidden;
+    overflow-x:scroll;
+    white-space:nowrap;
+
+    margin: 0 50px;
+}
+.thumbnail-wrapper {
+    display:inline-block;
+    position:relative;
+
+    margin:5px;
+    width:200px;
+
+    border: 1px solid white;
+}
+.thumbnail-wrapper > .thumbnail-title {
+    position:absolute;
+    top:4px;
+    left:4px;
+    z-index:2;
+
+    text-shadow: 1px 1px black;
+}
+.thumbnail-wrapper > img{
+    width: 100%;
+}
+.thumbnail-wrapper.thumbnail-clickable {
+    cursor:pointer;
+}
+.thumbnail-wrapper.thumbnail-active {
+    color: red;
+}
+
+.thumbnail-wrapper.thumbnail-active,
+.thumbnail-wrapper.thumbnail-clickable:hover{
+    transition: all .15s ease-in-out;
+    width: 210px;
+    margin: 0;
+}
+
+
+.scroll-button{
+    position: absolute;
+    top: 0;
+    z-index: 3;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    border: .5px solid #333;
+    color: white;
+    width: 49px;
+    font-size: 90px;
+    padding: 0;
+    cursor:pointer;
+}
+.scroll-button:active{
+    transition:all .1s ease-in;
+    color:#333;
+}
+.scroll-button-left{
+    left:0;
+}
+.scroll-button-right{
+    right:0
+}
+
