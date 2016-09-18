@@ -1,4 +1,5 @@
 import React from 'react';
+import {browserHistory} from 'react-router';
 
 import Video from './Video.jsx';
 import VideoPicker from './VideoPicker.jsx';
@@ -10,40 +11,49 @@ export default class PlayerSurface extends React.Component {
         super(props);
 
         //we'll use the class's constructor to define this component's initial state
-        let initialVideo;
         const videoIdFromRouter = this.props.params.id;
-
-        if (videoIdFromRouter) {
-            //look for the video in our data
-            initialVideo = this.getVideoFromVideoId(this.props.videos, videoIdFromRouter);
-            // initialVideo = this.props.videos.find(item => {
-            //     //I used weak `==` in case '5' or 5, for example
-            //     return item.id == videoIdFromRouter;
-            // });
-        } 
-
-        if (!initialVideo){
-            //pick the first one
-            initialVideo = this.props.videos[0];
-        }
-        
         this.state = {
-            selectedVideo: initialVideo
+            selectedVideo: this.getVideoById(this.props.videos, videoIdFromRouter)
         };
     }
 
-    getVideoFromVideoId(videos, id) {
-        return videos.find(item => {
-            //I used weak `==` in case '5' or 5, for example
-            return item.id == id;
+    componentWillReceiveProps(nextProps) {
+        //note: this method is not called for the initial render
+
+        //we'll use it here to react to videoId changes from React Router
+        const videoIdFromRouter = nextProps.params.id;
+
+        //setState() causes React to rerender
+        this.setState({
+            selectedVideo: this.getVideoById(this.props.videos, videoIdFromRouter)
         });
     }
 
-    changeVideo(videoId){
-        const newVideo = this.getVideoFromVideoId(this.props.videos, videoId);
-        this.setState({
-            selectedVideo: newVideo
-        });
+    getVideoById(videos, videoId) {
+        let foundVideo;
+        if (videoId) {
+            //look for the video in our data
+            foundVideo = videos.find(item => {
+                //I used weak `==` in case '5' or 5, for example
+                return item.id == videoId;
+            });
+        } 
+
+        if (!foundVideo){
+            //pick the first one
+            foundVideo = videos[0];
+        }
+        
+        return foundVideo;
+    }
+
+    handleThumbClick(videoId){
+        /* 
+            use react router to change the selected video. 
+            the change will eventually be picked back up here in this class in
+                componentWillReceiveProps(...)
+        */
+        browserHistory.push(`/video/${videoId}`);
     }
 
     renderThumbnails(videos) {
@@ -52,23 +62,31 @@ export default class PlayerSurface extends React.Component {
                 <Thumbnail imgUrl={video.thumbnailUrl}
                            title={video.title}
                            id={video.id}
-                           onThumbClick={() => {this.changeVideo(video.id);}} 
+                           onThumbClick={() => {this.handleThumbClick(video.id);}} 
                            isActive={video.id === this.state.selectedVideo.id}/>
             );
         });
     }
 
+    togglePlayState() {
+        if (this.video.paused){
+            this.video.play();
+        } else {
+            this.video.pause();
+        }
+    }
+
     render() {
-            console.log('HEY!', this.props.videos);
-            console.log('selected video', this.state.selectedVideo);
-        
+        //we need to make this an array because that's what our <Video> component accepts
         const selectedVideoSources = [this.state.selectedVideo.video.url];
 
         return (
             <div className="player-surface">
                 <Video sources={selectedVideoSources} 
                        poster={this.state.selectedVideo.heroUrl}
-                       title={this.state.selectedVideo.title} />
+                       title={this.state.selectedVideo.title} 
+                       ref={(ref) => {this.video = ref;}}
+                       onClick={this.togglePlayState}/>
 
                 <VideoPicker>
                     {this.renderThumbnails(this.props.videos)}

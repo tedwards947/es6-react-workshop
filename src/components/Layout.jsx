@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 export default class Layout extends React.Component {
     render() {
         return (
-            <div className="layout">
+            <div id="layout" className="layout">
 
                 <header>
                     <Link to="/">
@@ -14,14 +14,17 @@ export default class Layout extends React.Component {
 
                 <div className="content">
                     {this.props.children}
+                    <div className="push" />
                 </div>
 
-                <footer>
-                    <p>
-                        MIT License
-                    </p>
-                </footer>
-
+                <button className="debugger" onClick={
+                    ()=>{
+                            document.location = '/';
+                        }
+                }>
+                reload
+                </button>
+                
             </div>
         );
     }

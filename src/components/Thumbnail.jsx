@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import classNames from 'classnames';
 
 export default class Thumbnail extends React.Component {
@@ -22,7 +21,6 @@ export default class Thumbnail extends React.Component {
         );
     }
 }
-
 
 Thumbnail.PropTypes = {
     imgUrl: React.PropTypes.string.isRequired,

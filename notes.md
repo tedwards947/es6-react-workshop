@@ -12,4 +12,6 @@ Steps:
 * get assets & host them locally on ur mac
 
 
+# exercise ideas:
+* finish the scrollLeft thing on the thumbnailpicker, after introducing refs
 

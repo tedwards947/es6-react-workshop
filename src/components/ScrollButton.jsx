@@ -2,15 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 
 export default class ScrollButton extends React.Component {
-
-    getButtonLabel(direction) {
-        if (direction === 'left') {
-            return '<';
-        } else if (direction === 'right') {
-            return '>';
-        }
-    }
-
     render() {
 
         const classes = classNames('scroll-button', {
@@ -19,12 +10,10 @@ export default class ScrollButton extends React.Component {
             'scroll-button-right': this.props.direction === 'right'
         });
 
-        const buttonValue = this.getButtonLabel(this.props.direction);
-
         return (
             <input type="button"
                    className={classes}
-                   value={buttonValue} 
+                   value={this.props.direction} 
                    onClick={this.props.onScrollClick} />
         );
     }
