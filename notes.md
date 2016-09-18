@@ -17,3 +17,5 @@ Steps:
 * finish the scrollLeft thing on the thumbnailpicker, after introducing refs
 * make sure the scrollLeft thing ensures that the current video is visible 
 
+* add attirbution to https://github.com/lmammino/judo-heroes
+
