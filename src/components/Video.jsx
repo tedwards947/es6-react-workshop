@@ -9,6 +9,8 @@ export default class Video extends React.Component {
             'ogg': 'video/ogg',
             'webm': 'video/webm'
         };
+
+        this.togglePlayState = this.togglePlayState.bind(this);
     }
 
     getSourceType(source){    
@@ -26,11 +28,23 @@ export default class Video extends React.Component {
         return this.VIDEO_TYPES[fileExtension] || null;
     }
 
+    togglePlayState() {
+        if (this.video.paused){
+            this.video.play();
+        } else {
+            this.video.pause();
+        }
+    }
+
     render() {
         return (
-            <div className="video-wrapper">
+            <div className="video-wrapper" onClick={this.togglePlayState}>
                 <h3>{this.props.title}</h3>
-                <video controls poster={this.props.poster} height="700" width="1200">
+                <video controls height="700" width="1200" 
+                       poster={this.props.poster} 
+                       ref={(ref) => {
+                           console.log('ref assignment', ref);
+                           this.video = ref;}}>
 
                     {/* will render _n_ <source/> elements. note the special key property. */}
                     {this.props.sources.map((source, idx) => {

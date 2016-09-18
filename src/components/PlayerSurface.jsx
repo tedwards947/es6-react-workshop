@@ -68,13 +68,6 @@ export default class PlayerSurface extends React.Component {
         });
     }
 
-    togglePlayState() {
-        if (this.video.paused){
-            this.video.play();
-        } else {
-            this.video.pause();
-        }
-    }
 
     render() {
         //we need to make this an array because that's what our <Video> component accepts
@@ -84,9 +77,7 @@ export default class PlayerSurface extends React.Component {
             <div className="player-surface">
                 <Video sources={selectedVideoSources} 
                        poster={this.state.selectedVideo.heroUrl}
-                       title={this.state.selectedVideo.title} 
-                       ref={(ref) => {this.video = ref;}}
-                       onClick={this.togglePlayState}/>
+                       title={this.state.selectedVideo.title} />
 
                 <VideoPicker>
                     {this.renderThumbnails(this.props.videos)}

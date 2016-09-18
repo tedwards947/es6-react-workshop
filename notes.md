@@ -10,8 +10,10 @@ Steps:
 # Todos;
 
 * get assets & host them locally on ur mac
+* understand why i have to bind `this` for class methods 'sometimes'?
 
 
 # exercise ideas:
 * finish the scrollLeft thing on the thumbnailpicker, after introducing refs
+* make sure the scrollLeft thing ensures that the current video is visible 
 

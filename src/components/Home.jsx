@@ -6,9 +6,8 @@ export default class Home extends React.Component {
 
         return (
             <div className="home-page">
-                <h1>hello world!</h1>
-                <Link to="/video">Go to the video</Link>
-                <Link to="/video/3">Go to the video 3</Link>
+                <h1>ES6 and ReactDOM Video Player Demo</h1>
+                <Link to="/video">Go to the player!</Link>
             </div>
         );
     }

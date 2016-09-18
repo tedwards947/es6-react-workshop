@@ -3,10 +3,12 @@
 .video-wrapper{
     padding: 0 50px;
     position:relative;
+    cursor:pointer;
 }
 .video-wrapper > h3 {
     position:absolute;
     left:70px;
+    text-shadow: 1px 1px 4px #333;
 }
 
 .video-wrapper > video {
@@ -47,7 +49,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
     left:4px;
     z-index:2;
     white-space: normal;
-    text-shadow: 1px 1px black;
+    text-shadow: 1px 1px 3px black;
     letter-spacing: 0.6px;
     cursor:inherit;
 
