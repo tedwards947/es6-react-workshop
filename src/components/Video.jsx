@@ -42,9 +42,7 @@ export default class Video extends React.Component {
                 <h3>{this.props.title}</h3>
                 <video controls height="700" width="1200" 
                        poster={this.props.poster} 
-                       ref={(ref) => {
-                           console.log('ref assignment', ref);
-                           this.video = ref;}}>
+                       ref={(ref) => {this.video = ref;}}>
 
                     {/* will render _n_ <source/> elements. note the special key property. */}
                     {this.props.sources.map((source, idx) => {
