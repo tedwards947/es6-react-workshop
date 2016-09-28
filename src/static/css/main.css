@@ -1,32 +1,26 @@
 
 
 .video-wrapper{
-    padding: 0 50px;
     position:relative;
     cursor:pointer;
+    text-align:center;
 }
-.video-wrapper > h3 {
+.video-wrapper h3 {
     position:absolute;
     left:70px;
     text-shadow: 1px 1px 4px #333;
 }
 
-.video-wrapper > video {
-    width: 100%;
-    max-width: 1600px;
-    height: auto;
+.video-wrapper video {
+    width: 80vw;
+    max-width: 1200px;
+    max-height: 705px;
+    height: 51vw; /*doing this gives roughly 16:9 aspect ratio*/
 }
-
-/*canditate background*/
-/*background: -moz-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 5%, rgba(0,0,0,0) 95%, rgba(0,0,0,1) 100%);
-background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 5%,rgba(0,0,0,0) 95%,rgba(0,0,0,1) 100%);
-background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 5%,rgba(0,0,0,0) 95%,rgba(0,0,0,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=1 );*/
 
 .video-picker{
     padding: 10px 0;
     position:relative;
-
 }
 .video-picker-thumbnails {
     overflow-y: hidden;
@@ -35,18 +29,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
 
     margin: 0 50px;
 }
+.video-picker-thumbnails::-webkit-scrollbar {
+    display:none;
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
 .thumbnail-wrapper {
     display:inline-block;
     position:relative;
-
-    margin:5px;
+    margin: 7px 5px;
     width:200px;
+    height:110px;
     color: lightgray;
     border: 1px solid black;
+    background-size:cover;
 }
 .thumbnail-wrapper > .thumbnail-title {
     position:absolute;
-    left:4px;
     z-index:2;
     white-space: normal;
     text-shadow: 1px 1px 3px black;
@@ -54,23 +53,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
     cursor:inherit;
 
     /* vertically and horizontally centering the title */
-    width:195px;
+    width:100%;
     top: 50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
     transform: translateY(-50%);
     text-align: center;
-}
-.thumbnail-wrapper > img{
-    width: 100%;
 }
 .thumbnail-wrapper.thumbnail-clickable:not(.thumbnail-active) {
     cursor:pointer;
 }
 .thumbnail-wrapper.thumbnail-active {
-    color: red;
     cursor:default;
 }
 
@@ -79,16 +70,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
     border-color:white;
     color: #FFF;
     transition: all .15s ease-in-out;
-    width: 210px;
-    margin: 0;
+    transform:scale(1.05);
 }
 
 
 .video-picker-thumbnails:hover .thumbnail-wrapper.thumbnail-active:not(:hover) {
     border-color:black;
     color: lightgray;
-    width: 200px;
-    margin: 5px;
+    transform:scale(1);
 }
 
 
@@ -135,10 +124,3 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
     border-left-color:lightgray;
 }
 
-
-
-.debugger{
-    position:fixed;
-    top:0;
-    right:0
-}
