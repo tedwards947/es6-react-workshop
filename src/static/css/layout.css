@@ -5,6 +5,7 @@ body {
     padding: 0;
 
     font-family: 'Helvetica', 'sans-serif';
+    overflow-x:hidden;
 }
 
 a:link{
@@ -23,4 +24,13 @@ header{
 }
 .content{
     padding:20px;
+}
+
+
+
+
+.debugger{
+    position:fixed;
+    top:0;
+    right:0
 }

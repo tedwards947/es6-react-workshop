@@ -36,6 +36,16 @@ export default class Video extends React.Component {
         }
     }
 
+    componentDidUpdate(previousProps, previousState){
+        if(previousProps.sources !== this.props.sources){
+            /*
+                We need to imperatively call .load() here because while React's render() will update the 
+                <source>s within <video>, <video> will not reload automatically.
+            */
+            this.video.load();
+        }
+    }
+
     render() {
         return (
             <div className="video-wrapper" onClick={this.togglePlayState}>

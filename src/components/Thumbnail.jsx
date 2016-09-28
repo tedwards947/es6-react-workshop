@@ -9,12 +9,17 @@ export default class Thumbnail extends React.Component {
             'thumbnail-active': this.props.isActive
         });
 
+        const divStyle = {
+            backgroundImage: `url(${this.props.imgUrl})`
+        };
+
         //notice the arrow function which allows us to pass this.props.id to the click handler function
         return (
-            <div className={classes} onClick={() => {this.props.onThumbClick(this.props.id)}}>
+            <div className={classes} 
+                 title={this.props.title}
+                 onClick={() => {this.props.onThumbClick(this.props.id)}}
+                 style={divStyle}>
 
-                <img src={this.props.imgUrl} alt={this.props.title} />
-                
                 <span className="thumbnail-title">{this.props.title}</span>
                
             </div>
