@@ -12,7 +12,6 @@ export default class Thumbnail extends React.Component {
         const divStyle = {
             backgroundImage: `url(${this.props.imgUrl})`
         };
-        // <img src={this.props.imgUrl} alt={this.props.title} />
 
         //notice the arrow function which allows us to pass this.props.id to the click handler function
         return (

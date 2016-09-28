@@ -47,7 +47,6 @@ export default class Video extends React.Component {
     }
 
     render() {
-        console.log('render! sources:', this.props.sources)
         return (
             <div className="video-wrapper" onClick={this.togglePlayState}>
                 <h3>{this.props.title}</h3>

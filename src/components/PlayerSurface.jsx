@@ -23,7 +23,6 @@ export default class PlayerSurface extends React.Component {
         //we'll use it here to react to videoId changes from React Router
         const videoIdFromRouter = nextProps.params.id;
 
-        console.log('videoIdFromRouter', videoIdFromRouter, 'selectedVideo:', this.getVideoById(this.props.videos, videoIdFromRouter))
         //setState() causes React to rerender
         this.setState({
             selectedVideo: this.getVideoById(this.props.videos, videoIdFromRouter)
