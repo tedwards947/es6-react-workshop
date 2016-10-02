@@ -49,7 +49,7 @@ const trailers = [
         "thumbnailUrl": "http://localhost:8082/thumbs/LordOfTheRings.jpg",
         "heroUrl": "http://localhost:8082/heroes/LordOfTheRings.png",
         "video": {
-            "url": "http://localhost:8082/videos/TheLordOfTheRingsTrailer.mp4"
+            "url": "http://localhost:8082/videos/LordOfTheRingsTrailer.mp4"
         },
         "id": 5
     },
