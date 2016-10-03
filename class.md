@@ -45,10 +45,11 @@ _These steps are written with MacOS in mind. If you have a different operating s
 
         git clone https://github.com/tedwards947/es6-react-workshop.git
 
-<!--Do we really want to do this? I don't think so...-->
-* Intialize our project & create `package.json`: 
+  _(If you don't have `git` installed, follow the instructions <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">here</a>)_
 
-        npm init -f
+### **1. Install dependencies**
+
+##### Option 1: _(preferred)_
 
 * Install **babel**, **express**, **react**, and **react-router**:
 
@@ -64,37 +65,53 @@ _These steps are written with MacOS in mind. If you have a different operating s
 
         npm install --save-dev webpack@1.13.2 babel-loader@6.2.5 http-server@0.9.0
 
+##### Option 2: _(if npm install is being difficult due to poor connectivity)_
+
+* Open a web browser and navigate to 
+
+        http://x.x.x.x/8080/node_modules.zip
+
+* Move the zip file to the directory you just cloned from GitHub and extract it.
 
 
+### **2. Get assets**
+
+You need to host the images and videos used in this workshop locally. 
+
+* Open a web browser and navigate to 
+
+        http://x.x.x.x/8080/assets.zip
+
+* Move the zip file to the directory you just cloned from GitHub and extract it.
+
+We're going to use the npm package **http-server** to act as a simple CDN _(content delivery network)_ for us.
+* In your terminal, from within the `es6-react-workshop` directory, do:
+
+        ./node_modules/http-server/bin/http-server ./assets -p 8082
+
+You should see output very similar to this:
+
+```
+Starting up http-server, serving ./assets
+Available on:
+        http://<your IP>:8082
+Hit CTRL-C to stop the server
+```
+
+<!--FIX THIS-->
+## Heading title needed! 
 
 ### HTML Entry Point
 
-\<description here\> place to host it yadayadayada
-
-* Create a new file in `src/static/index.html` and call it ~`FILENAME.html`~
+Take a look at `src/static/index.html`. Most of it is pretty standard. We're including some 
+CSS and JavaScript files. Notice this line:
 
 ```html
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ES6 + React</title>
-
-        <!--Commented out for later-->
-        <!--<link rel="stylesheet" href="/css/main.css">-->
-    </head>
-    <body>
-
-        <!--This is where React will hook into the document-->
-        <div id="main"></div>
-
-
-        <!--Commented out for later-->
-        <!--<script src="/js/main.js"></script>-->
-    </body>
-    </html>
+<div id="main"></div>
 ```
+
+This is where we'll tell React to inject itself in our page.
+
 
 ### Data
 
@@ -109,4 +126,18 @@ Copy the data file from ~`LOCATION`~ and put it in `src/data/data.json`.
 
 # put attribution for help here:
 https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app
-# wtf is super()?
+
+
+
+
+#mix this back in:
+1) set `npm config set registry http://x.x.x.x:pppp` to set the npm registry to my local cache
+
+* don't bother with the stupid thing, just try node_modules copying the zip
+
+* download assets.zip and node_modules.zip, put them in the folder you just checked out and 
+* set up http-server to serve the assets. From within the `es6-react-workshop` directory, do:
+        
+        ./node_modules/http-server/bin/http-server ./assets -p 8082
+
+n) don't forget to do `npm config delete registry` at the end so that your registry is restored to default.

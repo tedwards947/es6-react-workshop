@@ -1,4 +1,4 @@
-const trailers = [
+const videos = [
     {
         "title": "Kung Fu Hustle",
         "thumbnailUrl": "http://localhost:8082/thumbs/KungFuHustle.jpg",
@@ -72,4 +72,4 @@ const trailers = [
         "id": 7
     }
 ];
-export default trailers;
+export default videos;

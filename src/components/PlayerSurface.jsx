@@ -4,7 +4,7 @@ import {browserHistory} from 'react-router';
 import Video from './Video.jsx';
 import VideoPicker from './VideoPicker.jsx';
 import Thumbnail from './Thumbnail.jsx';
-import trailers from '../data/data.js';
+import videos from '../data/data.js';
 
 export default class PlayerSurface extends React.Component {
     constructor(props) {
@@ -92,5 +92,5 @@ PlayerSurface.PropTypes = {
 };
 
 PlayerSurface.defaultProps = {
-    videos: trailers
+    videos: videos
 };
