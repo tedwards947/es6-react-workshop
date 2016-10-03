@@ -74,7 +74,7 @@ _These steps are written with MacOS in mind. If you have a different operating s
 * Move the zip file to the directory you just cloned from GitHub and extract it.
 
 
-### **2. Get assets**
+### **2. Get Assets**
 
 You need to host the images and videos used in this workshop locally. 
 
@@ -103,7 +103,7 @@ Hit CTRL-C to stop the server
 
 **Important: Leave this running. Open a new terminal tab/window to do subsequent steps.**
 
-## Interesting Files 
+## Files 
 
 ### Data
 
@@ -142,7 +142,13 @@ Take a look at `src/static/index.html`. Most of it is pretty standard HTML boile
 This is where we'll tell React to inject itself in our page.
 
 
+# ReactJS
+write some intro about React here
 
+## Components
+quick description, maybe a picture outlining each component
+
+* 
 
 
 
