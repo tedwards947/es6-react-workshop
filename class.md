@@ -78,6 +78,9 @@ _These steps are written with MacOS in mind. If you have a different operating s
 
 You need to host the images and videos used in this workshop locally. 
 
+_(If you're doing these steps outside the context of
+a physical workshop, you'll need to come up with your own assets (try archive.org) and adjust the `data.js` file accordingly.)_
+
 * Open a web browser and navigate to 
 
         http://x.x.x.x/8080/assets.zip
@@ -98,13 +101,39 @@ Available on:
 Hit CTRL-C to stop the server
 ```
 
-<!--FIX THIS-->
-## Heading title needed! 
+**Important: Leave this running. Open a new terminal tab/window to do subsequent steps.**
+
+## Interesting Files 
+
+### Data
+
+Look at `src/data.js`. Below is an example entry:
+
+```json
+{
+        "title": "Kung Fu Hustle",
+        "thumbnailUrl": "http://localhost:8082/thumbs/KungFuHustle.jpg",
+        "heroUrl": "http://localhost:8082/heroes/KungFuHustle.png",
+        "video": {
+                        "url": "http://localhost:8082/videos/KungFuHustleTrailer.mp4"
+                },
+        "id": 0
+}
+```
+
+Each entry contains information about the video:
+        
+* **`title`:** the title of the video
+* **`thumbnailUrl`:** the image URL for the small-sized static "poster" image
+* **`heroUrl`:** the image URL for the large-sized static "poster" image, used when the video is queued but not playing
+* **`video.url`:** the URL of the actual video file
+* **`id`:** the ID of the video. For this example, they are numeric, but they needn't be.
+
+Notice how the URLs contain `localhost:8082`. This will point to the **http-server** instace you set running earlier on your machine. 
 
 ### HTML Entry Point
 
-Take a look at `src/static/index.html`. Most of it is pretty standard. We're including some 
-CSS and JavaScript files. Notice this line:
+Take a look at `src/static/index.html`. Most of it is pretty standard HTML boilerplate, so I won't go into much detail. Notice this line, however:
 
 ```html
 <div id="main"></div>
@@ -112,10 +141,6 @@ CSS and JavaScript files. Notice this line:
 
 This is where we'll tell React to inject itself in our page.
 
-
-### Data
-
-Copy the data file from ~`LOCATION`~ and put it in `src/data/data.json`.
 
 
 
@@ -127,17 +152,3 @@ Copy the data file from ~`LOCATION`~ and put it in `src/data/data.json`.
 # put attribution for help here:
 https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app
 
-
-
-
-#mix this back in:
-1) set `npm config set registry http://x.x.x.x:pppp` to set the npm registry to my local cache
-
-* don't bother with the stupid thing, just try node_modules copying the zip
-
-* download assets.zip and node_modules.zip, put them in the folder you just checked out and 
-* set up http-server to serve the assets. From within the `es6-react-workshop` directory, do:
-        
-        ./node_modules/http-server/bin/http-server ./assets -p 8082
-
-n) don't forget to do `npm config delete registry` at the end so that your registry is restored to default.
