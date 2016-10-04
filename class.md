@@ -139,13 +139,108 @@ Take a look at `src/static/index.html`. Most of it is pretty standard HTML boile
 <div id="main"></div>
 ```
 
-This is where we'll tell React to inject itself in our page.
+This is where we'll tell React to inject itself in our page. 
+
+Speaking of React, let's get to it!
 
 
-# ReactJS
-write some intro about React here
+# React
 
-## Components
+React is a declarative, component-based way to write user interfaces.
+Rather than requiring the user _(that's you!)_ to learn a bunch of special jargon and syntax,
+it uses syntax that most JavaScript developers are likely to be familiar with.
+
+Let's take a look at a quick example to help you visualize React
+and how it compares to AngularJS and "vanilla" (plain) JavaScript. 
+
+How might we write some code that accepts an array of data and writes the items to
+`<li>` elements in an ordered list (`<ol>`)?
+
+For the following examples, the data we'll be using is:
+<!--Use this opportunity to explain `let` and `const`?-->
+```JavaScript
+const names = [
+        'Theresa',
+        'David',
+        'Gordon',
+        'Tony',
+        'John',
+        'Margaret',
+        'James'
+];
+```
+The examples should all produce the same output:
+>1) Theresa
+>2) David
+>3) Gordon
+>4) Tony
+>5) John
+>6) Margaret
+>7) James
+
+#### "Vanilla" JS _(ES5)_:
+
+```JavaScript
+document.writeln('<ol>');
+for (var i = 0; i < names.length; i++){
+        document.writeln('<li>' + names[i] + '</li>');
+}
+document.writeln('</ol>');
+```
+
+#### "Vanilla" JS _(ES6)_:
+Notice `let` instead of `var` and the new `for...of` loop
+```JavaScript
+document.writeln('<ol>');
+for (let item of names){
+        document.writeln('<li>' + item + '</li>');
+}
+document.writeln('</ol>');
+```
+
+We can also take a more functional approach and shave off 2 lines:
+```JavaScript
+document.writeln('<ol>');
+names.forEach(item => document.writeln('<li>' + item + '</li>'));
+document.writeln('</ol>');
+```
+
+A quick aside on `const` and `let`: **There is no longer a valid use case for `var`**. The new `const` and `let` fix the issue with variables hoisted outside of blocks into function scope,
+as well as a few other issues.
+
+But of course plain vanilla JS doesn't scale well when working on a large app with many developers.
+Let's take a look at Angular and React now.
+#### AngularJS:
+```HTML
+<ol>
+        <li ng-repeat="name in names">{{name}}</li>
+</ol>
+```
+This is pretty declarative and is one of Angular's best features. 
+Unfortunately, there's a lot of magic behind the scenes, and if you want to customize
+the iterator, it can be quite complex to write your own directive.
+
+#### React _(using JSX)_:
+<!--point out the { } to enclose real js, lack of the word `function`-->
+```JSX
+render() {
+        return (
+                <ol>
+                        {names.map(name => {
+                            return (<li>{name}</li>); 
+                        })}
+                </ol>
+        );
+}
+```
+
+While not as terse as the 3 line example in function ES6 or Angular, I believe React's syntax is 
+much better as app complexity increases. Notice also how we're writing JavaScript right in the middle of HTML! 
+
+In React, this is called "JSX". Files containing JSX syntax often use the file extension `.jsx`.
+We'll be working a lot more with JSX so stick with me.
+
+## React Components
 quick description, maybe a picture outlining each component
 
 * 
