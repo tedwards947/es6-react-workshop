@@ -205,8 +205,25 @@ names.forEach(item => document.writeln('<li>' + item + '</li>'));
 document.writeln('</ol>');
 ```
 
-A quick aside on `const` and `let`: **There is no longer a valid use case for `var`**. The new `const` and `let` fix the issue with variables hoisted outside of blocks into function scope,
+<hr>
+
+#### A quick aside on `const` and `let`:
+**There is no longer a valid use case for `var`**. The new `const` and `let` fix the issue with variables hoisted outside of blocks into function scope,
 as well as a few other issues.
+
+* `let` is pretty much a direct replacement for `var` and you can use it in the same ways
+* `const` prevents variable _reassignment_. **Keep in mind though that `const` is not `Object.freeze()`**
+  * The following is not allowed:
+
+        const test = {foo: "bar"};
+        test = "hello world"; // <- will throw an error
+
+  * However, the following _is_ allowed:
+
+        const test = {foo: "bar"};
+        test.foo = "Hello World";
+        
+<hr>
 
 But of course plain vanilla JS doesn't scale well when working on a large app with many developers.
 Let's take a look at Angular and React now.
@@ -216,7 +233,7 @@ Let's take a look at Angular and React now.
         <li ng-repeat="name in names">{{name}}</li>
 </ol>
 ```
-This is pretty declarative and is one of Angular's best features. 
+This is pretty declarative and its terseness is one of Angular's best features. 
 Unfortunately, there's a lot of magic behind the scenes, and if you want to customize
 the iterator, it can be quite complex to write your own directive.
 
@@ -235,15 +252,20 @@ render() {
 ```
 
 While not as terse as the 3 line example in function ES6 or Angular, I believe React's syntax is 
-much better as app complexity increases. Notice also how we're writing JavaScript right in the middle of HTML! 
+much better as an app's complexity increases. Notice also how we're writing JavaScript right in the middle of HTML! 
 
 In React, this is called "JSX". Files containing JSX syntax often use the file extension `.jsx`.
-We'll be working a lot more with JSX so stick with me.
+We'll be working a lot more with JSX shortly so stick with me.
+
+
+## Hello World
+
+
+
 
 ## React Components
-quick description, maybe a picture outlining each component
-
-* 
+Like any good framework, React is opinionated. React demands that 
+* i finish this section
 
 
 
