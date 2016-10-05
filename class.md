@@ -293,7 +293,7 @@ window.onload = () => {
 There's a build step required to convert JSX into JavaScript that the browser can understand.
 To build the project, in your terminal, from the base project directory, do:
 
-        npm run build
+	npm run build
 
 This step uses **webpack** will run the **React** & **Babel** (more on Babel later) transpiler 
 to convert our ES6-flavored JSX into cross-browser compatible JavaScript. 
@@ -304,9 +304,9 @@ If you look at `src/static/index.html` you can see that I've included our bundle
 
 Let's have a look at what we have so far. In your terminal, do:
 
-		npm run start-static
+	npm run start-static
 
-and open a browser. Navigate to http://localhost:8080 and you should see the names listed out.
+and open a browser. Navigate to `http://localhost:8080` and you should see the names listed out.
 
 **Important: After each code change, you will need to stop the server and re-run `npm run build` and then `npm run start-static` before you can see your latest changes.** 
 
@@ -469,6 +469,18 @@ window.onload = () => {
 	ReactDOM.render(<Home />, document.getElementById('main'));
 };
 ```
+
+After you navigate to the new page, open the developer console. Start typing in the textbox. Notice that the logging statement you added gets called after each
+keystroke. React is detecting that the state changed and is updating the DOM (in `render()`) to reflect that. 
+Don't worry, React has a very performant way of diffing and determining a minimum set of changes it needs to make to the DOM. 
+A complete explanation of this mechanism is unfortunately outside the scope of this tutorial, but if you're interested, <a href="https://www.codecademy.com/articles/react-virtual-dom">here is a page explaining how it works.</a>
+
+Notice that we're using native JS events to tell React what to do (`onChange`, `onClick`). We point them to methods on the class, `handleChange()` and `handleButtonClick()`, respectively.
+In the class's `constructor` method, we need to bind `this` to these functions. 
+```Javascript
+this.handleChange = this.handleChange.bind(this);
+```
+If we don't, `this` refers to the class definition instead of an instance, as we would expect.
  
 
 ## React Components
@@ -628,6 +640,10 @@ That handler is passed from parent to child in the exact same way that we dictat
 For the purposes of this contrived example, I added both components to the same file. In reality, each component should have its own file. This will be demonstrated shortly.
 
 
-# put attribution for help here:
-https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app
+# A special thanks...
+* To Luciano Mammino _(<a href="https://twitter.com/loige">Twitter</a>)_ for his wonderful article <a href="https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app">React on the Server for Beginners: Build a Universal React and Node App"</a> for refreshing my memory on how to make a universal JS webapp from scratch.
+* To Brian Holt _(<a href="https://twitter.com/holtbt">Twitter</a>)_  for letting me TA for him on <a href="http://btholt.github.io/complete-intro-to-react/">this workshop</a> (from which I borrowed some ideas), and for encouraging me to give workshops on my own.
 
+
+
+2016 Tony Edwards _(<a href="https://twitter.com/tedwards947">Twitter</a>)_
