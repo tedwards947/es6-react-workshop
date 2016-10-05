@@ -257,6 +257,7 @@ much better as an app's complexity increases. Notice also how we're writing Java
 In React, this is called "JSX". Files containing JSX syntax often use the file extension `.jsx`.
 We'll be working a lot more with JSX shortly so stick with me.
 
+<hr/> 
 
 ## First Steps
 
@@ -331,13 +332,13 @@ const INITIAL_NAMES = [
 ];
 
 class Home extends React.Component {
-    constructor(props) {
-        super(props);
+	constructor(props) {
+		super(props);
 
-        this.state = {
-            names: INITIAL_NAMES
-        };
-    }
+		this.state = {
+			names: INITIAL_NAMES
+		};
+	}
 
 	render() {
 		return (
@@ -382,7 +383,12 @@ contained in the component's state, rather than the static names array at the to
 
 * In `window.onload`, we're including our `<Home />` component, rather than writing the `render()` method right there.
 
-```jsx
+<hr/>
+
+That was a lot of work for not much benefit. Let's make things dynamic so I can show off React's true power.
+
+Modify `client.jsx` once more so that it looks like this, including the `console.log`. I know it's a lot, but I'll walk you through it.
+```JSX
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -441,7 +447,7 @@ class Home extends React.Component {
 				
 				<input type="button"
 					   onClick={this.handleButtonClick}
-					   value="Add Name" />
+					   value="Add Name" />}
 
 				<ol>
 					{this.state.names.map(name => {
