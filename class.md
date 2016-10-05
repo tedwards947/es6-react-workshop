@@ -304,9 +304,13 @@ If you look at `src/static/index.html` you can see that I've included our bundle
 
 Let's have a look at what we have so far. In your terminal, do:
 
-         ./node_modules/http-server/bin/http-server ./src/static -p 8080
+		npm run start-static
 
 and open a browser. Navigate to http://localhost:8080 and you should see the names listed out.
+
+**Important: After each code change, you will need to stop the server and re-run `npm run build` and then `npm run start-static` before you can see your latest changes.** 
+
+<hr/>
 
 ## React State
 
@@ -383,7 +387,8 @@ contained in the component's state, rather than the static names array at the to
 
 * In `window.onload`, we're including our `<Home />` component, rather than writing the `render()` method right there.
 
-<hr/>
+
+## Reacting to State Changes
 
 That was a lot of work for not much benefit. Let's make things dynamic so I can show off React's true power.
 
@@ -464,17 +469,163 @@ window.onload = () => {
 	ReactDOM.render(<Home />, document.getElementById('main'));
 };
 ```
-
  
 
-
 ## React Components
-Like any good framework, React is opinionated. React demands that 
-* i finish this section
 
+React is fairly opinionated when it comes to the layout of code. Components are a way to package UI features into reusable and relatively atomic portions. 
+Let's componetize some of the example above.
 
+One obvious choice for componentization is the textbox and button. We should make that bit of UI a component for a few reasons:
+* It could be reused other places in our app, any time we wanted a textbox and a button
+* We can more easily reason what that bit of code does, because its inputs and outputs are restricted
+* It makes the code more maintainable and readable
 
+We'll rip out the two `<input>` tags and replace them with a component!
 
+Once again, edit `client.jsx`:
+
+```JSX
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const INITIAL_NAMES = [
+	'Theresa',
+	'David',
+	'Gordon',
+	'Tony',
+	'John',
+	'Margaret',
+	'James'
+];
+
+class NameInput extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			textboxValue: ''
+		};
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleButtonClick = this.handleButtonClick.bind(this);
+	}
+
+	handleChange(event) {
+		//we're using React to manage the textbox's state
+		this.setState({
+			textboxValue: event.target.value
+		});
+	}
+
+	handleButtonClick() {
+		if (this.state.textboxValue === ''){
+			//do nothing if the textbox is empty
+			return false;
+		}
+
+		//calls the onAddValue function passed to this component as a prop
+		//we pass it as an argument so that the parent component can handle the new value.
+		this.props.onAddValue(this.state.textboxValue);
+
+		//now we null out this component's textboxValue to erase it.
+		this.setState({
+			textboxValue: ''
+		});
+	}
+
+	render() {
+		return (
+			<div>
+				<input type="text"
+					value={this.state.textboxValue}
+					onChange={this.handleChange} />
+
+				<input type="button"
+					onClick={this.handleButtonClick}
+					value={this.props.buttonText} />
+			</div>
+		);
+	}
+}
+
+class Home extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			names: INITIAL_NAMES
+		};
+
+		this.handleAddValue = this.handleAddValue.bind(this);
+	}
+
+	handleAddValue(value) {
+		const _names = this.state.names;
+		_names.push(value);
+
+		//updates this component's state
+		this.setState({
+			names: _names
+		});
+	}
+
+	render() {
+		console.log('render method called. current state:', this.state);
+		return (
+			<div>
+				<NameInput buttonText="Add a new value" onAddValue={this.handleAddValue}/>
+				
+				<ol>
+					{this.state.names.map(name => {
+						return <li>{name}</li>
+					})}
+				</ol>
+			</div>
+		);
+	}
+}
+
+window.onload = () => {
+	ReactDOM.render(<Home />, document.getElementById('main'));
+};
+```
+
+Some more big changes here:
+* We've broken out the `<input>` tags into a new class `NameInput`:
+	```javascript
+	class NameInput extends React.Component {
+	```
+	Notice also that we've changed the `render()` method of `Home` to no longer have the textbox and button, but rather:
+	```JSX
+	<NameInput buttonText="Add a new value" onAddValue={this.handleAddValue} />
+	```
+
+* The methods `handleChange()` and `handleButtonClick()` have been moved to the `NameInput` class. 
+With a few exceptions, (unfortunately outside the scope of this tutorial), atomic components like this should be responsible for handling their own state.
+
+* The button's text is being provided to `NameInput` by it's parent, `Home`. When we include `NameInput`:
+	```jsx
+	<NameInput buttonText="Add a new value" ...
+	```
+	we are passing the text we want for the button as a **prop**. You can see that in `NameInput`, the button's code is:
+	```jsx
+	<input type="button"
+		onClick={this.handleButtonClick}
+		value={this.props.buttonText} />
+	```
+	We set the `value` of the `<input>` to be `this.props.buttonText`.
+
+* Our new `NameInput` component will be responsible for handling the state changes of user input, and only when the user clicks the "Add Name" button, will it 
+report to its parent (`Home`) that a new name should be added to the list.
+
+* When `NameInput` says it wants to add a new name to the list, it calls `this.props.onAddValue()` method. The handler for this method is within `Home`, `handleAddValue()`. 
+That handler is passed from parent to child in the exact same way that we dictated the button text. 
+	```JSX
+	<NameInput buttonText="Add a new value" onAddValue={this.handleAddValue} />
+	```
+
+For the purposes of this contrived example, I added both components to the same file. In reality, each component should have its own file. This will be demonstrated shortly.
 
 
 # put attribution for help here:
