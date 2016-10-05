@@ -639,11 +639,16 @@ That handler is passed from parent to child in the exact same way that we dictat
 
 For the purposes of this contrived example, I added both components to the same file. In reality, each component should have its own file. This will be demonstrated shortly.
 
+Now that you have a basic understanding of React's `state` and `props`, let's start building the video player!
+
+
+
+
 
 # A special thanks...
 * To Luciano Mammino _(<a href="https://twitter.com/loige">Twitter</a>)_ for his wonderful article <a href="https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app">React on the Server for Beginners: Build a Universal React and Node App"</a> for refreshing my memory on how to make a universal JS webapp from scratch.
 * To Brian Holt _(<a href="https://twitter.com/holtbt">Twitter</a>)_  for letting me TA for him on <a href="http://btholt.github.io/complete-intro-to-react/">this workshop</a> (from which I borrowed some ideas), and for encouraging me to give workshops on my own.
 
-
+<hr />
 
 2016 Tony Edwards _(<a href="https://twitter.com/tedwards947">Twitter</a>)_
