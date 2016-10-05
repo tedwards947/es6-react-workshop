@@ -258,9 +258,208 @@ In React, this is called "JSX". Files containing JSX syntax often use the file e
 We'll be working a lot more with JSX shortly so stick with me.
 
 
-## Hello World
+## First Steps
 
+We'll implement the above example for real now.
+Open `src/client.jsx` in your favorite editor. Write the following:
+<!--Make sure the file is empty for them?-->
 
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const names = [
+        'Theresa',
+        'David',
+        'Gordon',
+        'Tony',
+        'John',
+        'Margaret',
+        'James'
+];
+
+window.onload = () => {
+	ReactDOM.render(
+		(<ol>
+			{names.map(name => {
+				return (<li>{name}</li>); 
+			})}
+		</ol>)
+	, document.getElementById('main'));
+};
+```
+
+There's a build step required to convert JSX into JavaScript that the browser can understand.
+To build the project, in your terminal, from the base project directory, do:
+
+        npm run build
+
+This step uses **webpack** will run the **React** & **Babel** (more on Babel later) transpiler 
+to convert our ES6-flavored JSX into cross-browser compatible JavaScript. 
+I've configured it to use `client.jsx` as an entry point and to output the resulting
+JavaScript to `src/static/js/bundle.js`. **Each time you make a change to React code in this tutorial, you'll need to re-run** `npm run build`.
+
+If you look at `src/static/index.html` you can see that I've included our bundled JavaScript.
+
+Let's have a look at what we have so far. In your terminal, do:
+
+         ./node_modules/http-server/bin/http-server ./src/static -p 8080
+
+and open a browser. Navigate to http://localhost:8080 and you should see the names listed out.
+
+## React State
+
+One of the best features of React is how it _reacts_ to changing application state. 
+Rather than having to imparatively update the DOM when a user, say, adds an item to a list, 
+React takes care of that for you because the underlying data changes. 
+
+To demonstrate that, let's take a look at an example. 
+Open `client.jsx` again, and modify it like so:
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const INITIAL_NAMES = [
+	'Theresa',
+	'David',
+	'Gordon',
+	'Tony',
+	'John',
+	'Margaret',
+	'James'
+];
+
+class Home extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            names: INITIAL_NAMES
+        };
+    }
+
+	render() {
+		return (
+			<div>
+				<ol>
+					{this.state.names.map(name => {
+						return <li>{name}</li>
+					})}
+				</ol>
+
+			</div>
+		);
+	}
+}
+
+window.onload = () => {
+	ReactDOM.render(<Home />, document.getElementById('main'));
+};
+```
+A few things to notice here:
+* We're extending the `React.Component` class with the following line:
+	```javascript
+	class Home extends React.Component {
+	```
+	This creates a new ES6 class called `Home` and automatically gives it all of the fun stuff contained within `React.Component`.
+
+* The class's `constructor` is the place to put code that is run when the class is first instantiated.
+	* `super(props)` tells JavaScript to call the `constructor` method of the parent class. 
+	In this case, it will call `React.Component`'s `constructor()`
+
+* We're setting our little component with initial state with
+	```javascript
+	this.state = {
+		names: INITIAL_NAMES
+	};
+	```
+	At this point, we have relinquished control over our list of names to React. 
+	We've set up the initial state, and now we let React handle it.
+
+* The `render()` method is relatively unchanged, except we're `map`ping over the values 
+contained in the component's state, rather than the static names array at the top.
+
+* In `window.onload`, we're including our `<Home />` component, rather than writing the `render()` method right there.
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const INITIAL_NAMES = [
+	'Theresa',
+	'David',
+	'Gordon',
+	'Tony',
+	'John',
+	'Margaret',
+	'James'
+];
+
+class Home extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			names: INITIAL_NAMES,
+			textboxValue: ''
+		};
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleButtonClick = this.handleButtonClick.bind(this);
+	}
+
+	handleChange(event) {
+		//we're using React to manage the textbox's state
+		this.setState({
+			textboxValue: event.target.value
+		});
+	}
+
+	handleButtonClick() {
+		if (this.state.textboxValue === ''){
+			//do nothing if the textbox is empty
+			return false;
+		}
+		const _names = this.state.names;
+		_names.push (this.state.textboxValue);
+
+		//updates the component's state, including the names array and nulling out the textbox's value
+		this.setState({
+			names: _names,
+			textboxValue: ''
+		});
+	}
+
+	render() {
+		console.log('render method called. current state:', this.state);
+		return (
+			<div>
+				<input type="text"
+					   value={this.state.textboxValue}
+					   onChange={this.handleChange} />
+				
+				<input type="button"
+					   onClick={this.handleButtonClick}
+					   value="Add Name" />
+
+				<ol>
+					{this.state.names.map(name => {
+						return <li>{name}</li>
+					})}
+				</ol>
+
+			</div>
+		);
+	}
+}
+
+window.onload = () => {
+	ReactDOM.render(<Home />, document.getElementById('main'));
+};
+```
+
+ 
 
 
 ## React Components
