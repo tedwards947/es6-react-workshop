@@ -639,9 +639,30 @@ That handler is passed from parent to child in the exact same way that we dictat
 
 For the purposes of this contrived example, I added both components to the same file. In reality, each component should have its own file. This will be demonstrated shortly.
 
+# Our Video Player App
 Now that you have a basic understanding of React's `state` and `props`, let's start building the video player!
 
+## What we're building
 
+<img src="./diagram.png"  width=680/>
+
+_(The red lines denote the boundries of React components.)_
+
+* **Layout.jsx**: The wrapper parent component that contains the header and body of our app.
+* **PlayerSurface.jsx**: This component is the body of our app.
+It houses the video and the thumbnail picker, as well as acting as the controller.
+* **Video.jsx**: Contains the logic required to render the `<video>` element
+* **VideoPicker.jsx**: This component handles video selection. It includes `Thumbnail`s and `ScrollButton`s and controls the logic for their selection.  
+* **Thumbnail.jsx**: Straightforward component that displays an image and offers a click handler.
+* **ScrollButton.jsx**: Simple button wrapper that tells `VideoPicker` to scroll left or right.
+
+## Single Page Application
+We'll take things a bit further by making this a single page app.
+When a user selects a different video, we'll update the URL in the browser. Updating the URL will trigger the video to change.
+In this app, this provides a streamlined way to share the URL to friends and drive them to the video:
+`/video/5`, where "5" is the ID of the video. This URL change will not require a call to the server, so that's why it's called a "Single Page App".
+
+## Introducing React Router
 
 
 
@@ -649,6 +670,7 @@ Now that you have a basic understanding of React's `state` and `props`, let's st
 * To Luciano Mammino _(<a href="https://twitter.com/loige">Twitter</a>)_ for his wonderful article <a href="https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app">React on the Server for Beginners: Build a Universal React and Node App"</a> for refreshing my memory on how to make a universal JS webapp from scratch.
 * To Brian Holt _(<a href="https://twitter.com/holtbt">Twitter</a>)_  for letting me TA for him on <a href="http://btholt.github.io/complete-intro-to-react/">this workshop</a> (from which I borrowed some ideas), and for encouraging me to give workshops on my own.
 
+* Video and image assets used in this demonstration were obtained from <a href="archive.org">archive.org</a>.
 <hr />
 
 2016 Tony Edwards _(<a href="https://twitter.com/tedwards947">Twitter</a>)_
