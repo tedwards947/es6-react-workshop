@@ -14,13 +14,11 @@ export default class Layout extends React.Component {
 
                 <div className="content">
                     {this.props.children}
-                    <div className="push" />
                 </div>
 
-                <button className="debugger" onClick={
-                    ()=>{
-                            document.location = '/';
-                        }
+                <button className="debugger" onClick={ () => {
+                        document.location = '/';
+                    }
                 }>
                 reload
                 </button>

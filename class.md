@@ -701,6 +701,65 @@ export default routes;
 	* `PlayerSurface.jsx`
 	* `NotFound.jsx` (for our 404 route)
 
+	We'll make these files soon.
+
+
+* The first bit of JSX defines the layout we're going to use for our app:
+	```jsx
+	<Route path="/" component={Layout}>
+	```
+
+* The first child of `<Route>` defines the index path (`/`). When a user lands on our site with no path, this is the page we'll render.
+	```jsx
+	<IndexRoute component={PlayerSurface}/>
+	```
+
+* The same goes for `/video`. We'll render the `PlayerService` component.
+
+* We want to use React router to pass the video ID from the path to our app, and we do that with the Express-like syntax: `video/:id`. Anything that is given after `video/` will be passed to our app, and the app will decide how to handle it.
+	```jsx
+	<Route path="video/:id" component={PlayerSurface} />
+	```
+
+* The last `<Route>` matches for anything other than `/`, `/video`, and `/video/:id`. We'll render our 404 page in this case.
+
+That's it! **react-router** will handle the rest of the heavy lifting for us. We'll be able to see it working soon, so stay with me.
+
+## Layout
+
+Most web app frameworks require a layout template on which to build your app. This app is no different. Within `/src/components`, make `Layout.jsx` and open it in your editor.
+
+```jsx
+import React from 'react';
+import { Link } from 'react-router';
+
+export default class Layout extends React.Component {
+    render() {
+        return (
+            <div id="layout" className="layout">
+
+                <header>
+                    <Link to="/">
+                        <span class="logo">Home</span>
+                    </Link>
+                </header>
+
+                <div className="content">
+                    {this.props.children}
+                </div>
+            </div>
+        );
+    }
+}
+```
+
+* We're importing `Link` from **react-router**. This is the easiest way to add links between routes in React.
+
+* Our `<header>` is static in this case, but it doesn't have to be. More complex apps could have an entire navigation component included here, for example.
+
+* Notice `{this.props.children}`. Earlier, in `Routes.jsx`, you saw that we had components nested inside other components, just like real HTML. The same goes with React. Components nested in this fashion are passed to their children via `this.props.children`. The developer is responsible for implementing rendering them. 
+
+
 
 # A special thanks...
 * To Luciano Mammino _(<a href="https://twitter.com/loige">Twitter</a>)_ for his wonderful article <a href="https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app">React on the Server for Beginners: Build a Universal React and Node App"</a> for refreshing my memory on how to make a universal JS webapp from scratch.
