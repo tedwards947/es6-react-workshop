@@ -657,6 +657,7 @@ It houses the video and the thumbnail picker, as well as acting as the controlle
 * **ScrollButton.jsx**: Simple button wrapper that tells `VideoPicker` to scroll left or right.
 
 ## Single Page Application
+
 We'll take things a bit further by making this a single page app.
 When a user selects a different video, we'll update the URL in the browser. Updating the URL will trigger the video to change.
 In this app, this provides a streamlined way to share the URL to friends and drive them to the video:
@@ -664,6 +665,41 @@ In this app, this provides a streamlined way to share the URL to friends and dri
 
 ## Introducing React Router
 
+React Router is a routing library built for React. 
+It follows React's component-based architecture very well, 
+and so it makes perfect sense to use for this example app. 
+Once we set it up, it should be straightforward to add new routes as we need.
+
+Let's get started. 
+Within `src/` make a new file called `Routes.jsx` and open it in your editor. Add:
+
+```jsx
+import React from 'react'
+import { Route, IndexRoute } from 'react-router'
+import Layout from './components/Layout.jsx';
+import PlayerSurface from './components/PlayerSurface.jsx';
+import NotFound from './components/NotFound.jsx';
+
+const routes = (
+	<Route path="/" component={Layout}>
+		<IndexRoute component={PlayerSurface}/>
+		<Route path="video" component={PlayerSurface} />
+		<Route path="video/:id" component={PlayerSurface} />
+		<Route path="*" component={NotFound}/>
+	</Route>
+);
+
+export default routes;
+```
+
+* With ES6, we can import just portions of a file with the syntax:  _(more info <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">here</a>)_ 
+	```javascript
+	import {foo, bar} from "my-module";
+	```
+* Besides importing **react** and **react-router**, we're importing
+	* `Layout.jsx`
+	* `PlayerSurface.jsx`
+	* `NotFound.jsx` (for our 404 route)
 
 
 # A special thanks...
