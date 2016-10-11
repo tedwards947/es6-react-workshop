@@ -847,7 +847,129 @@ and
 npm run start-static
 ```
 
-Navigate to `localhost:8080` to (hopefully) see "Hello World!" If that works, try typing a bogus route like `localhost:8080/foobar`, and see how our 404 page works.
+Navigate to `localhost:8080` to (hopefully) see "Hello World!" If that works, try typing a bogus route like `localhost:8080/foobar`, and see how our 404 page works. 
+After that, go to `localhost:8080/video` and `localhost:8080/video/2` to see how the params are written to the page.
+
+## Video
+
+Now that we've stood up a functional app, let's start making it useful. One by one, we'll add more components to `PlayerSurface.jsx` until it resembles the example image above.
+We'll start with `Video.jsx`. Create it in `src/components` and open it.
+
+```jsx
+import React from 'react';
+import URI from 'urijs';
+
+export default class Video extends React.Component {
+    constructor() {
+        super();
+
+        this.togglePlayState = this.togglePlayState.bind(this);
+    }
+
+    togglePlayState() {
+        if (this.video.paused){
+            this.video.play();
+        } else {
+            this.video.pause();
+        }
+    }
+
+    componentDidUpdate(previousProps, previousState){
+        if(previousProps.sources !== this.props.sources){
+            /*
+                We need to imperatively call .load() here because while React's render() will update the 
+                <source>s within <video>, <video> will not reload automatically.
+            */
+            this.video.load();
+        }
+    }
+
+    render() {
+        return (
+            <div className="video-wrapper" onClick={this.togglePlayState}>
+                <h3>{this.props.title}</h3>
+                <video controls height="700" width="1200" 
+                       poster={this.props.poster} 
+                       ref={(ref) => {this.video = ref;}}>
+
+                    {/* will render _n_ <source/> elements. note the special key property. */}
+                    {this.props.sources.map((source, idx) => {
+                        const TYPE = 'video/mp4';
+                        return (<source src={source} type={TYPE} key={idx} />);
+                    })}
+
+                    {/* Fallback text for browsers that don't support HTML5 playback... */}
+                    Your browser does not support HTML5 Video playback
+                </video>
+
+            </div>
+        );
+    }
+}
+```
+
+I'll start with `render()` and work my way backwards:
+
+### `render()`
+
+* Notice the `onClick` handler on the video wrapper. This is to play/pause the video when the user clicks anywhere on the video surface.
+
+* The `<h3>` wraps the selected video's title.
+
+* This app uses the HTML5 `<video>` tag. If you're not familiar with it, W3 Schools offers <a href="http://www.w3schools.com/html/html5_video.asp">a nice tutorial.</a> For now, I'll walk you through it.
+
+* `<video>` has a few  attributes:
+	* `controls`: Whether or not the browser should render video controls for the video
+	* `height`, `width`
+	* `poster`: A placeholder image to use while the video is loading, is paused, or finishes.
+	* `ref`: This isn't a built-in HTML attribute. It's very powerful though, and I'll get to it in a minute.
+
+* Within `<video>`, _n_ `<source>` tags are added to specify the possible video files to use. You might use more than one `<source>` when specifying different filetypes, for example.
+
+* The `key` attribute is special to React. By assigning a unique ID to a list of compoents, React can more easily keep track of changes to the DOM. Note: the key only has to be unique to the component rendering it, not to the entire app. 
+Because of this, we can simply use the array index from `.map()`.
+
+* The plain text following the `<source>` elements is used if the browser doesn't support video playback. Most do, but to be safe, we include it here.
+
+### `componentDidUpdate(previousProps, previousState)`
+
+* This is an example of a React <a href="https://facebook.github.io/react/docs/component-specs.html">"Lifecycle Method"</a>. Others will be introduced later.
+
+* This function is called after React has reacted to a change of state and has rerendered (if it needed to). It provides the previous state's props and states, so we can do some imperative logic with them.
+
+* In this case, we're using it to check if the sources changed from what it used to be. If it has, this means that the user has selected a different video
+
+* We then imperatively call `<video>`'s `load()` method to tell it to fetch the video asset.
+
+* **Important**: Notice how we're able to access the `<video>` element directly. This is because in the `render()` method, we assigned the `<video>` a `ref`.
+
+### **A Quick Aside on Refs**
+
+It's often important to have a reference to a DOM element directly. While in general you should use React's way of reacting to state to drive changes in your application,
+there might be times where you simply cannot avoid working with the element itself. One example of this is when you need to call functions on the element itself. 
+
+Here's how this works:
+
+```jsx
+<video ref={
+	(ref) => {this.video = ref;}
+}>
+```
+
+`ref` allows you to pass a callback that gets called when the component is mounted. It provides a reference to the element as an argument.
+We can then use this reference to add it to our React component via `this.video = ref;`
+
+After it's mounted & our element is now added to our React component object, we can reference it directly by 
+
+### `togglePlayState()`
+
+* This is an event handler for when the user clicks on the video surface.
+
+
+
+
+
+
 
 # A special thanks...
 * To Luciano Mammino _(<a href="https://twitter.com/loige">Twitter</a>)_ for his wonderful article <a href="https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app">React on the Server for Beginners: Build a Universal React and Node App"</a> for refreshing my memory on how to make a universal JS webapp from scratch.
