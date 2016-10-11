@@ -723,6 +723,24 @@ export default routes;
 
 * The last `<Route>` matches for anything other than `/`, `/video`, and `/video/:id`. We'll render our 404 page in this case.
 
+One last bit of **react-router** config. In `src/components`, make & open `AppRoutes.jsx`:
+
+```jsx
+import React from 'react';
+import { Router, browserHistory } from 'react-router';
+import routes from '../routes.jsx';
+
+export default class AppRoutes extends React.Component {
+    render() {
+        return (
+            <Router history={browserHistory} routes={routes} />
+        );
+    }
+}
+```
+
+* This is the entry point for **react-router**. We're configuring it to use the vanilla browserHistory API and to use the routes we just created in `Routes.jsx`.
+
 That's it! **react-router** will handle the rest of the heavy lifting for us. We'll be able to see it working soon, so stay with me.
 
 ## Layout
@@ -759,7 +777,77 @@ export default class Layout extends React.Component {
 
 * Notice `{this.props.children}`. Earlier, in `Routes.jsx`, you saw that we had components nested inside other components, just like real HTML. The same goes with React. Components nested in this fashion are passed to their children via `this.props.children`. The developer is responsible for implementing rendering them. 
 
+## PlayerSurface
 
+We'll be coming back to this file later, but for now, in `src/components`, create `PlayerSurface.jsx` and open it up. For now:
+
+```jsx
+import React from 'react';
+export default class PlayerSurface extends React.Component {
+    render() {
+        return (
+			<div>
+				<span>Hello world!</span>
+				<span>The value of <pre>:id</pre> is {this.props.params.id}.</span>
+			</div>
+		);
+	}
+}
+```
+
+* Notice how I'm referencing `this.props.params.id`. The `params` object contains parameters passed in the path, and we can do anything we want with the params now, including just writing them to the page.
+
+## NotFound
+
+Our 404 page is simple enough:
+
+```jsx
+import React from 'react';
+import { Link } from 'react-router';
+
+export default class NotFound extends React.Component {
+    render() {
+
+        return (
+            <div className="not-found">
+                <h1>404 - Not Found</h1>
+                <Link to="/">Click here to return home.</Link>
+            </div>
+        );
+    }
+}
+```
+
+* Simple enough. Notice though that we provide a `<Link to="/">` to allow the user an easy way home.
+
+## Hello World?
+
+We have now done _almost_ enough work to stand up our very first React web app. Sure it doesn't do much, but we'll enhance it soon.
+
+The last thing to do is to modify `src/client.jsx` to use our new router:
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import AppRoutes from './components/AppRoutes.jsx';
+
+window.onload = () => {
+  ReactDOM.render(<AppRoutes/>, document.getElementById('main'));
+};
+```
+
+* This tells React to render `<appRoutes/>` in the main area of our HTML.
+
+Now that that's done, rebuild the project and run it:
+```
+npm run build
+```
+and
+```
+npm run start-static
+```
+
+Navigate to `localhost:8080` to (hopefully) see "Hello World!" If that works, try typing a bogus route like `localhost:8080/foobar`, and see how our 404 page works.
 
 # A special thanks...
 * To Luciano Mammino _(<a href="https://twitter.com/loige">Twitter</a>)_ for his wonderful article <a href="https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app">React on the Server for Beginners: Build a Universal React and Node App"</a> for refreshing my memory on how to make a universal JS webapp from scratch.
