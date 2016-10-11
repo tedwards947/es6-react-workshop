@@ -952,7 +952,7 @@ Here's how this works:
 
 ```jsx
 <video ref={
-	(ref) => {this.video = ref;}
+    (ref) => {this.video = ref;}
 }>
 ```
 
@@ -965,10 +965,16 @@ After it's mounted & our element is now added to our React component object, we 
 
 * This is an event handler for when the user clicks on the video surface.
 
+* We're just checking if the video is paused, and if it is, we `play()` it, otherwise we `pause()` it.
 
+### `constructor()`
 
-
-
+* This is the same as other constructor methods on other classes, except we need to be sure to:
+	```javascript
+	this.togglePlayState = this.togglePlayState.bind(this);
+	```
+	We have to bind `this` to the `togglePlayState` method. If we don't, when we go to call the method, it will refer to a static method that is shared between all instances of our `Video` class, not the instance we're concerned with.
+	When `constructor()` gets called, it will bind `this` to the method: `this` being a reference to the current instance.
 
 
 # A special thanks...
