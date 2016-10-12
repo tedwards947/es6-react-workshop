@@ -69,7 +69,7 @@ _These steps are written with MacOS in mind. If you have a different operating s
 
 * Open a web browser and navigate to 
 
-        http://x.x.x.x/8080/node_modules.zip
+        http://x.x.x.x:8080/node_modules.zip
 
 * Move the zip file to the directory you just cloned from GitHub and extract it.
 
