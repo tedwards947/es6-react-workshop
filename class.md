@@ -83,7 +83,7 @@ a physical workshop, you'll need to come up with your own assets (try archive.or
 
 * Open a web browser and navigate to 
 
-        http://x.x.x.x/8080/assets.zip
+        http://x.x.x.x:8080/assets.zip
 
 * Move the zip file to the directory you just cloned from GitHub and extract it.
 
