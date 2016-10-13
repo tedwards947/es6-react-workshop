@@ -1240,7 +1240,7 @@ export default class VideoPicker extends React.Component {
 }
 ```
 
-* We're `import`ing our new Thumbnail component
+* We're `import`ing a not-quite-built-yet component ScrollButton. We'll get there very soon.
 
 ### `constructor()`
 
@@ -1262,9 +1262,50 @@ We are again using `ref` to help us get a reference to a dom element, since we n
 * Inside the wrapper `<div>`, we render the component's children.
 * After that, we render another `<ScrollButton/>`, this time a rightward one.
 
-The end is near! Let's quickly write a scroll button component
-
 ## ScrollButton
+
+The end is near! Let's quickly write a scroll button component.
+
+Create and open `src/components/ScrollButton.jsx`:
+
+```jsx
+import React from 'react';
+import classNames from 'classnames';
+
+export default class ScrollButton extends React.Component {
+    render() {
+
+        const classes = classNames('scroll-button', {
+            //there may be terser ways to express this, but I wrote it out here for clarity
+            'scroll-button-left': this.props.direction === 'left',
+            'scroll-button-right': this.props.direction === 'right'
+        });
+
+        return (
+            <input type="button"
+                   className={classes}
+                   value={this.props.direction} 
+                   onClick={this.props.onScrollClick} />
+        );
+    }
+}
+```
+
+This isn't a big component at all. The < and > arrows are created using some CSS hackery, so we don't have to worry about icons.
+
+* Notice how we're using **classnames** again to selectively add a CSS class to our component based on the `direction` prop passed to ScrollButton.
+
+* We then render a button and pass along:
+
+  * type
+  * className (from **classnames**)
+  * value (not really needed but buttons need _some_ value.)
+  * onClick, which is just calling the click handler passed to ScrollButton by its parent.
+
+
+
+
+
 
 <hr />
 
