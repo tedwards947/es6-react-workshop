@@ -1020,7 +1020,9 @@ export default class PlayerSurface extends React.Component {
     }
 
     render() {
-        const selectedVideoSource = this.state.selectedVideo.video.url;
+        const source = this.state.selectedVideo.video.url;
+		const poster = this.state.selectedVideo.heroUrl;
+		const title = this.state.selectedVideo.title;
 
         return (
             <div className="player-surface">
@@ -1031,9 +1033,9 @@ export default class PlayerSurface extends React.Component {
                         selectedVideo: this.getVideoById(videos, selection)
                     });
 				}} />
-                <Video source={selectedVideoSource} 
-                       poster={this.state.selectedVideo.heroUrl}
-                       title={this.state.selectedVideo.title} />
+                <Video source={source} 
+                       poster={poster}
+                       title={title} />
             </div>
         );
     }
@@ -1077,6 +1079,35 @@ Here we're using it to react to **react-router** changing the ID when we navigat
 
 ### `render()`
 
+* First, I'm storing values with a long path in `const`s to make the JSX appear cleaner. This is just a style thing, and it's not at all required.
+
+* Within the wrapper `<div>`, I've created a quick test button that will allow us to switch videos without a video picker.
+  Notice that `this` means the react component. Had I written this function in ES5, it would look like:
+  ```javascript
+	onClick = { function() {
+		//test method
+		var selection = prompt('Which video?');
+		this.setState({
+			selectedVideo: this.getVideoById(videos, selection)
+		});
+	}}
+  ```
+	but `this` would **not** refer to the React component, but rather the click handler function. We'd have to use `bind(this)` to get the correct value of `this`.
+	With ES6 arrow function syntax, `this` is the value we expect.
+
+* We're then including our `<Video` component and passing the props it expects.
+
+We've now got enough written to test it out again! Do:
+
+```
+npm run build
+```
+and
+```
+npm run start-static
+```
+and go to `localhost:8080`. The first video should be selected, and it should be playable. 
+After you confirm that it plays, click the test button and enter a new number for the video ID (check `data/data.js` for possible values.)
 
 
 
