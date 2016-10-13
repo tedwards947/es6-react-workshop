@@ -850,6 +850,8 @@ npm run start-static
 Navigate to `localhost:8080` to (hopefully) see "Hello World!" If that works, try typing a bogus route like `localhost:8080/foobar`, and see how our 404 page works. 
 After that, go to `localhost:8080/video` and `localhost:8080/video/2` to see how the params are written to the page.
 
+<hr/>
+
 ## Video
 
 Now that we've stood up a functional app, let's start making it useful. One by one, we'll add more components to `PlayerSurface.jsx` until it resembles the example image above.
@@ -1189,6 +1191,80 @@ JavaScript will automatically replace `${numberOfMonths}` with the value of `num
   * A click handler `onClick={() => {this.props.onThumbClick(this.props.id)}}`. Notice that we're using ES6 arrow syntax. This allows us to pass an argument to the click handler, in this case, the thumbnail's video ID.
   * The style we created above that sets the correct background image.
 * We're also rendering a `<span>` that holds the video's title and that is positioned over the thumb via CSS.
+
+
+## VideoPicker
+
+We need a place to put all those `Thumbnail`s we have. Create and open `src/components/VideoPicker.jsx`:
+
+```jsx
+import React from 'react';
+import ScrollButton from './ScrollButton.jsx';
+
+export default class VideoPicker extends React.Component {
+    constructor() {
+        super()
+
+        this.scrollClickHandler = this.scrollClickHandler.bind(this);
+    }
+
+    scrollClickHandler(direction) {
+        const SCROLL_AMOUNT = 200;
+
+        //the this.thumbnails now refers to the dom element itself,  '.video-picker-thumbnails'
+        const currentScrollLeft = this.thumbnails.scrollLeft;
+        let modifier;
+        if (direction === 'left'){
+            modifier = -1;
+        } else if (direction === 'right') {
+            modifier = 1;
+        }
+
+        //will scroll the element left or right, depending on modifier
+        this.thumbnails.scrollLeft = currentScrollLeft + (modifier * SCROLL_AMOUNT);
+    }
+
+    render() {
+        return (
+            <div className="video-picker">
+                <ScrollButton direction="left" onScrollClick={() => {this.scrollClickHandler('left');}} />
+
+                {/* refs are a way to store a reference to the DOM node for later use  */}
+                <div className="video-picker-thumbnails" ref={(ref) => { this.thumbnails = ref;} }>
+                    {this.props.children}
+                </div>
+                <ScrollButton direction="right" onScrollClick={() => {this.scrollClickHandler('right');}} />
+            </div>
+        );
+    }
+}
+```
+
+* We're `import`ing our new Thumbnail component
+
+### `constructor()`
+
+* Not too much to see here, other than that we're binding `this` to the value we expect for `scrollClickHandler()`. 
+
+### `scrollClickHandler(direction)`
+While we haven't made it yet, we will make horizontal scrolling buttons soon. This is the handler that is invoked when a user clicks on one.
+
+The JavaScript here is fairly straightforward, but do notice the following line:
+```javascript
+this.thumbnails.scrollLeft = currentScrollLeft + (modifier * SCROLL_AMOUNT);
+```
+We are again using `ref` to help us get a reference to a dom element, since we need to work directly with the DOM to access `scrollLeft`.
+
+### `render()`
+
+* After our wrapper `<div>`, we render the `<ScrollButton/>` we're about to make. Notice we pass it a direction and a click handler as props.
+* We then render a wrapper `<div>`, and use `ref` to allow us to refer to the element in `scrollClickHandler()`.
+* Inside the wrapper `<div>`, we render the component's children.
+* After that, we render another `<ScrollButton/>`, this time a rightward one.
+
+The end is near! Let's quickly write a scroll button component
+
+## ScrollButton
 
 <hr />
 
