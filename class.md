@@ -973,7 +973,7 @@ After it's mounted & our element is now added to our React component object, we 
 Go back and open `src/components/PlayerSurface.jsx`. Enter the following:
 
 ```jsx
-import React from 'react';
+iimport React from 'react';
 
 import Video from './Video.jsx';
 import videos from '../data/data.js';
@@ -985,7 +985,7 @@ export default class PlayerSurface extends React.Component {
         //we'll use the class's constructor to define this component's initial state
         const videoIdFromRouter = this.props.params.id;
         this.state = {
-            selectedVideo: this.getVideoById(this.props.videos, videoIdFromRouter)
+            selectedVideo: this.getVideoById(videos, videoIdFromRouter)
         };
     }
 
@@ -997,7 +997,7 @@ export default class PlayerSurface extends React.Component {
 
         //setState() causes React to rerender
         this.setState({
-            selectedVideo: this.getVideoById(this.props.videos, videoIdFromRouter)
+            selectedVideo: this.getVideoById(videos, videoIdFromRouter)
         });
     }
 
@@ -1025,7 +1025,11 @@ export default class PlayerSurface extends React.Component {
         return (
             <div className="player-surface">
 				<input type="button" value="Test!" onClick={() => {
-					
+                    //test method
+                    const selection = prompt('Which video?');
+                    this.setState({
+                        selectedVideo: this.getVideoById(videos, selection)
+                    });
 				}} />
                 <Video source={selectedVideoSource} 
                        poster={this.state.selectedVideo.heroUrl}
@@ -1070,6 +1074,9 @@ This is another "Lifecycle Method", and this particular one gets called when a p
 It provides `nextProps` as an argument, which is the future state of our component's props. To access the current props. Use `this.props` as usual.
 
 Here we're using it to react to **react-router** changing the ID when we navigate to a new path.
+
+### `render()`
+
 
 
 
