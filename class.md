@@ -1025,7 +1025,7 @@ export default class PlayerSurface extends React.Component {
         return (
             <div className="player-surface">
 				<input type="button" value="Test!" onClick={() => {
-
+					
 				}} />
                 <Video source={selectedVideoSource} 
                        poster={this.state.selectedVideo.heroUrl}
