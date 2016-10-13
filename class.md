@@ -1109,7 +1109,86 @@ npm run start-static
 and go to `localhost:8080`. The first video should be selected, and it should be playable. 
 After you confirm that it plays, click the test button and enter a new number for the video ID (check `data/data.js` for possible values.)
 
+## Thumbnail 
 
+We've got a working video player and that's great, but having a `prompt()` box isn't the prettiest of user interfaces. 
+Let's enhance it with a horizontal scrolling list of videos. 
+
+The first step is to make a Thumbnail component that is responsible for rendering an image, displaying the video title, and passing a click handler to its parent.
+
+Create & open `src/components/Thumbnail.jsx`:
+
+```jsx
+import React from 'react';
+import classNames from 'classnames';
+
+export default class Thumbnail extends React.Component {
+    render() {
+
+        const classes = classNames('thumbnail-wrapper', {
+            'thumbnail-clickable': !!this.props.onThumbClick,
+            'thumbnail-active': this.props.isActive
+        });
+
+        const divStyle = {
+            backgroundImage: `url(${this.props.imgUrl})`
+        };
+
+        //notice the arrow function which allows us to pass this.props.id to the click handler function
+        return (
+            <div className={classes} 
+                 title={this.props.title}
+                 onClick={() => {this.props.onThumbClick(this.props.id)}}
+                 style={divStyle}>
+
+                <span className="thumbnail-title">{this.props.title}</span>
+               
+            </div>
+        );
+    }
+}
+```
+
+I'll start top-down again.
+
+* We're importing the **classnames** pacakge. This is a super useful library that affords us a little more power when adding CSS classes to React components.
+
+### `render()`
+
+* **classnames** has a neat interface. The first argument can be a string or an object, and the second argument can be an object or nothing. 
+  * When we pass a string as an argument, it will set it up such that that class is _always_ present on the element.
+  * When passing an object, you're allowed a little more flexibilty. Classes will be added to components if their values are truthy:
+    * `thumbnail-clickable` will only be applied if a click handler is passed as a prop to this component. If there's no click handler passed to `Thumbnail`, then the CSS class `thumbnail-clickable` will not be applied.
+	* `thumbnail-active` will be applied if `this.props.isActive` is truthy. 
+* Since we're going to set a background image on this element, we need to use JS to set it imperatively. Working with styles in React isn't difficult at all.
+  * Notice that I use `backgroundImage` instead of `background-image` like you might expect in CSS. This is because React is working with the underlying DOM element and **not** with CSS. Prove this to yourself by inspecting the contents of a native DOM element's `style` property. 
+  * I'm also using one of my favorite ES6 features: String templating!
+
+### **A Quick Aside on String Templates**
+
+Rather than having to do string concatination in ES5:
+```javascript
+var numberOfMonths = 12;
+var myString = 'There are ' + numberOfMonths + ' months in a year';
+```
+
+ES6 offers us some nice syntactic sugar to help:
+```javascript
+const numberOfMonths = 12;
+const myString = `There are ${numberOfMonths} months in a year`;
+```
+**Important:** This is the backtick (\`) character, not a single quote. 
+
+JavaScript will automatically replace `${numberOfMonths}` with the value of `numberOfMonths` for us! Magic!
+
+### `render()` again
+
+* We're now rendering a `<div>` and passing it:
+  * The `classes` object created by **classnames**
+  * A title
+  * A click handler `onClick={() => {this.props.onThumbClick(this.props.id)}}`. Notice that we're using ES6 arrow syntax. This allows us to pass an argument to the click handler, in this case, the thumbnail's video ID.
+  * The style we created above that sets the correct background image.
+* We're also rendering a `<span>` that holds the video's title and that is positioned over the thumb via CSS.
 
 <hr />
 
