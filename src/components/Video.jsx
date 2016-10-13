@@ -1,5 +1,4 @@
 import React from 'react';
-import URI from 'urijs';
 
 export default class Video extends React.Component {
     constructor() {

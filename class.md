@@ -857,7 +857,6 @@ We'll start with `Video.jsx`. Create it in `src/components` and open it.
 
 ```jsx
 import React from 'react';
-import URI from 'urijs';
 
 export default class Video extends React.Component {
     constructor() {
@@ -953,7 +952,7 @@ Here's how this works:
 ```jsx
 <video ref={
     (ref) => {this.video = ref;}
-}>
+}></video>
 ```
 
 `ref` allows you to pass a callback that gets called when the component is mounted. It provides a reference to the element as an argument.
@@ -976,6 +975,9 @@ After it's mounted & our element is now added to our React component object, we 
 	We have to bind `this` to the `togglePlayState` method. If we don't, when we go to call the method, it will refer to a static method that is shared between all instances of our `Video` class, not the instance we're concerned with.
 	When `constructor()` gets called, it will bind `this` to the method: `this` being a reference to the current instance.
 
+
+
+<hr />
 
 # A special thanks...
 * To Luciano Mammino _(<a href="https://twitter.com/loige">Twitter</a>)_ for his wonderful article <a href="https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app">React on the Server for Beginners: Build a Universal React and Node App"</a> for refreshing my memory on how to make a universal JS webapp from scratch.
