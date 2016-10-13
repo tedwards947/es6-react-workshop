@@ -70,12 +70,11 @@ export default class PlayerSurface extends React.Component {
 
 
     render() {
-        //we need to make this an array because that's what our <Video> component accepts
-        const selectedVideoSources = [this.state.selectedVideo.video.url];
+        const selectedVideoSource = this.state.selectedVideo.video.url;
 
         return (
             <div className="player-surface">
-                <Video sources={selectedVideoSources} 
+                <Video source={selectedVideoSource} 
                        poster={this.state.selectedVideo.heroUrl}
                        title={this.state.selectedVideo.title} />
 

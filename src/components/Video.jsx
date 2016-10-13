@@ -16,16 +16,18 @@ export default class Video extends React.Component {
     }
 
     componentDidUpdate(previousProps, previousState){
-        if(previousProps.sources !== this.props.sources){
+        if(previousProps.source !== this.props.source){
             /*
                 We need to imperatively call .load() here because while React's render() will update the 
-                <source>s within <video>, <video> will not reload automatically.
+                <source> within <video>, <video> will not reload automatically.
             */
             this.video.load();
         }
     }
 
     render() {
+        const TYPE = 'video/mp4';
+
         return (
             <div className="video-wrapper" onClick={this.togglePlayState}>
                 <h3>{this.props.title}</h3>
@@ -33,11 +35,7 @@ export default class Video extends React.Component {
                        poster={this.props.poster} 
                        ref={(ref) => {this.video = ref;}}>
 
-                    {/* will render _n_ <source/> elements. note the special key property. */}
-                    {this.props.sources.map((source, idx) => {
-                        const TYPE = 'video/mp4';
-                        return (<source src={source} type={TYPE} key={idx} />);
-                    })}
+                    <source src={this.props.source} type={TYPE} />
 
                     {/* Fallback text for browsers that don't support HTML5 playback... */}
                     Your browser does not support HTML5 Video playback
@@ -50,8 +48,6 @@ export default class Video extends React.Component {
 
 Video.PropTypes = {
     poster: React.PropTypes.string,
-    sources: React.PropTypes.arrayOf(
-        React.PropTypes.string.isRequired
-    ).isRequired,
+    source: React.PropTypes.string.isRequired,
     title: React.PropTypes.string
 };

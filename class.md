@@ -874,10 +874,10 @@ export default class Video extends React.Component {
     }
 
     componentDidUpdate(previousProps, previousState){
-        if(previousProps.sources !== this.props.sources){
+        if(previousProps.source !== this.props.source){
             /*
                 We need to imperatively call .load() here because while React's render() will update the 
-                <source>s within <video>, <video> will not reload automatically.
+                <source> within <video>, <video> will not reload automatically.
             */
             this.video.load();
         }
@@ -891,11 +891,7 @@ export default class Video extends React.Component {
                        poster={this.props.poster} 
                        ref={(ref) => {this.video = ref;}}>
 
-                    {/* will render _n_ <source/> elements. note the special key property. */}
-                    {this.props.sources.map((source, idx) => {
-                        const TYPE = 'video/mp4';
-                        return (<source src={source} type={TYPE} key={idx} />);
-                    })}
+                    <source src={this.props.source} type={TYPE} />
 
                     {/* Fallback text for browsers that don't support HTML5 playback... */}
                     Your browser does not support HTML5 Video playback
@@ -923,10 +919,7 @@ I'll start with `render()` and work my way backwards:
 	* `poster`: A placeholder image to use while the video is loading, is paused, or finishes.
 	* `ref`: This isn't a built-in HTML attribute. It's very powerful though, and I'll get to it in a minute.
 
-* Within `<video>`, _n_ `<source>` tags are added to specify the possible video files to use. You might use more than one `<source>` when specifying different filetypes, for example.
-
-* The `key` attribute is special to React. By assigning a unique ID to a list of compoents, React can more easily keep track of changes to the DOM. Note: the key only has to be unique to the component rendering it, not to the entire app. 
-Because of this, we can simply use the array index from `.map()`.
+* Within `<video>`, _n_ `<source>` tags are added to specify the possible video files to use. You might use more than one `<source>` when specifying different filetypes, for example. For our little example, we'll just use one.
 
 * The plain text following the `<source>` elements is used if the browser doesn't support video playback. Most do, but to be safe, we include it here.
 
@@ -936,7 +929,7 @@ Because of this, we can simply use the array index from `.map()`.
 
 * This function is called after React has reacted to a change of state and has rerendered (if it needed to). It provides the previous state's props and states, so we can do some imperative logic with them.
 
-* In this case, we're using it to check if the sources changed from what it used to be. If it has, this means that the user has selected a different video
+* In this case, we're using it to check if the source changed from what it used to be. If it has, this means that the user has selected a different video
 
 * We then imperatively call `<video>`'s `load()` method to tell it to fetch the video asset.
 
@@ -975,15 +968,125 @@ After it's mounted & our element is now added to our React component object, we 
 	We have to bind `this` to the `togglePlayState` method. If we don't, when we go to call the method, it will refer to a static method that is shared between all instances of our `Video` class, not the instance we're concerned with.
 	When `constructor()` gets called, it will bind `this` to the method: `this` being a reference to the current instance.
 
+## PlayerSurface, Part II
+
+Go back and open `src/components/PlayerSurface.jsx`. Enter the following:
+
+```jsx
+import React from 'react';
+
+import Video from './Video.jsx';
+import videos from '../data/data.js';
+
+export default class PlayerSurface extends React.Component {
+    constructor(props) {
+        super(props);
+
+        //we'll use the class's constructor to define this component's initial state
+        const videoIdFromRouter = this.props.params.id;
+        this.state = {
+            selectedVideo: this.getVideoById(this.props.videos, videoIdFromRouter)
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        //note: this method is not called for the initial render
+
+        //we'll use it here to react to videoId changes from React Router
+        const videoIdFromRouter = nextProps.params.id;
+
+        //setState() causes React to rerender
+        this.setState({
+            selectedVideo: this.getVideoById(this.props.videos, videoIdFromRouter)
+        });
+    }
+
+    getVideoById(videos, videoId) {
+        let foundVideo;
+        if (videoId) {
+            //look for the video in our data
+            foundVideo = videos.find(item => {
+                //I used weak `==` in case '5' or 5, for example
+                return item.id == videoId;
+            });
+        } 
+
+        if (!foundVideo){
+            //pick the first one
+            foundVideo = videos[0];
+        }
+        
+        return foundVideo;
+    }
+
+    render() {
+        const selectedVideoSource = this.state.selectedVideo.video.url;
+
+        return (
+            <div className="player-surface">
+				<input type="button" value="Test!" onClick={() => {
+
+				}} />
+                <Video source={selectedVideoSource} 
+                       poster={this.state.selectedVideo.heroUrl}
+                       title={this.state.selectedVideo.title} />
+            </div>
+        );
+    }
+}
+```
+
+I'm going to start from the top of the file this time:
+
+* Notice we're `import`ing our new `Video` React component, as well as our data module.
+
+### `constructor(props)`
+
+* We're passing `props` as an argument to `super()` so that the parent class can have access to this component's props.
+
+* `constructor()` is an ideal place to set up a component's initial state. 
+
+  * We get the `id` from **react-router** by accessing it here:
+	```javascript
+	const videoIdFromRouter = this.props.params.id;
+	```
+
+  * Now that we have the video's ID, we'll pass it to our function `getVideoById()` to retrieve the cooresponding data map, and we set the component's state:
+	```javascript
+	this.state = {
+		selectedVideo: this.getVideoById(this.props.videos, videoIdFromRouter)
+	};
+	```
+
+### `getVideoById(videos, videoId)`
+
+This method accepts our data map and retrieves the entry that cooresponds to `videoId`. 
+If we provide it an ID it doesn't recognize, it returns the first video.
+_(If we were shipping this app to production, we might want to have some error handling instead of just selecting the first video.)_
+
+### `componentWillReceiveProps(nextProps)`
+
+This is another "Lifecycle Method", and this particular one gets called when a parent component changes a component's props. 
+It provides `nextProps` as an argument, which is the future state of our component's props. To access the current props. Use `this.props` as usual.
+
+Here we're using it to react to **react-router** changing the ID when we navigate to a new path.
+
 
 
 <hr />
 
 # A special thanks...
 * To Luciano Mammino _(<a href="https://twitter.com/loige">Twitter</a>)_ for his wonderful article <a href="https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app">React on the Server for Beginners: Build a Universal React and Node App"</a> for refreshing my memory on how to make a universal JS webapp from scratch.
-* To Brian Holt _(<a href="https://twitter.com/holtbt">Twitter</a>)_  for letting me TA for him on <a href="http://btholt.github.io/complete-intro-to-react/">this workshop</a> (from which I borrowed some ideas), and for encouraging me to give workshops on my own.
+* To Brian Holt _(<a href="https://twitter.com/holtbt">Twitter</a>)_ for letting me TA for him on <a href="http://btholt.github.io/complete-intro-to-react/">this workshop</a> (from which I borrowed some ideas), and for encouraging me to give workshops on my own.
 
 * Video and image assets used in this demonstration were obtained from <a href="archive.org">archive.org</a>.
 <hr />
 
 2016 Tony Edwards _(<a href="https://twitter.com/tedwards947">Twitter</a>)_
+
+
+
+
+
+* The `key` attribute is special to React. By assigning a unique ID to a list of compoents, React can more easily keep track of changes to the DOM. Note: the key only has to be unique to the component rendering it, not to the entire app. 
+Because of this, we can simply use the array index from `.map()`.
