@@ -24,7 +24,7 @@ Don't worry if you're not familiar with these, I'll introduce them as we use the
 ES6 is the latest version of the <a href="http://www.ecma-international.org/ecma-262/6.0/">ECMAScript standard</a>, and it supercedes ES5,
 which was standardized in 2009. A lot has changed since 2009: Internet Explorer 8 was the most popular
 browser, and IE represented the lion's share of usage at approximately 70% 
-_(source: <a href="https://en.wikipedia.org/wiki/Usage_share_of_web_browsers#TheCounter.com_.282000_to_2009.29">Wikipedia</a>)_.
+_(source: <a href="https://en.wikipedia.org/wiki/Usage_share_of_web_browsers">Wikipedia</a>)_.
 JavaScript's latest features are very interesting and go a long way to improve some of the issues with the language's "bad parts", and introduces
 some awesome new features.
 
