@@ -1434,6 +1434,24 @@ This renders our VideoPicker component and passes the result of `renderThumbnail
 
 ### `PlayerSurface.defaultProps`
 
+Sometimes, you may find that you need to set default props on a component when it first renders. 
+These default props would get overridden by a parent component passing props down.
+`defaultProps = {}` allows you to set default props on a component. This is another really powerful feature of React, and enables even more code reuse and extensibility.
+
+In a real app, you'd likely have an entire data access layer to fetch your data for you. For this contrived video player example, we don't. 
+
+```javscript
+PlayerSurface.defaultProps = {
+    videos: VIDEOS
+};
+```
+
+Here we're simply setting `this.props.videos` to `VIDEOS`, which is our static data that we `import`ed at the top of the file. Now our file will be hydrated with some nice video data.
+
+**Note:** When you extend an ES6 class this way, it's critical that it goes after the class declaration. Unlike functions and variables in JavaScript, **classes are NOT hoisted**. 
+
+
+
 <hr />
 
 # A special thanks...
