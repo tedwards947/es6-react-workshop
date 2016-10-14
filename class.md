@@ -1303,9 +1303,136 @@ This isn't a big component at all. The < and > arrows are created using some CSS
   * onClick, which is just calling the click handler passed to ScrollButton by its parent.
 
 
+## PlayerSurface, Part III
+
+We've now written all the components we need to make a fully functional video player in React!
+
+Go back and open `src/components/PlayerSurface.jsx`. Replace the contents for:
+
+```jsx
+import React from 'react';
+import {browserHistory} from 'react-router';
+
+import Video from './Video.jsx';
+import VideoPicker from './VideoPicker.jsx';
+import Thumbnail from './Thumbnail.jsx';
+import VIDEOS from '../data/data.js';
+
+export default class PlayerSurface extends React.Component {
+    constructor(props) {
+        super(props);
+
+        //we'll use the class's constructor to define this component's initial state
+        const videoIdFromRouter = this.props.params.id;
+        this.state = {
+            selectedVideo: this.getVideoById(this.props.videos, videoIdFromRouter)
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        //note: this method is not called for the initial render
+
+        //we'll use it here to react to videoId changes from React Router
+        const videoIdFromRouter = nextProps.params.id;
+
+        //setState() causes React to rerender
+        this.setState({
+            selectedVideo: this.getVideoById(this.props.videos, videoIdFromRouter)
+        });
+    }
+
+    getVideoById(videos, videoId) {
+        let foundVideo;
+        if (videoId) {
+            //look for the video in our data
+            foundVideo = videos.find(item => {
+                //I used weak `==` in case '5' or 5, for example
+                return item.id == videoId;
+            });
+        } 
+
+        if (!foundVideo){
+            //pick the first one
+            foundVideo = videos[0];
+        }
+        
+        return foundVideo;
+    }
+
+    handleThumbClick(videoId){
+        /* 
+            use react router to change the selected video. 
+            the change will eventually be picked back up here in this class in
+                componentWillReceiveProps(...)
+        */
+        browserHistory.push(`/video/${videoId}`);
+    }
+
+    renderThumbnails(videos) {
+        return videos.map((video, idx) => {
+            return (
+                <Thumbnail imgUrl={video.thumbnailUrl}
+                           title={video.title}
+                           id={video.id}
+                           onThumbClick={() => {this.handleThumbClick(video.id);}} 
+                           isActive={video.id === this.state.selectedVideo.id}/>
+            );
+        });
+    }
 
 
+    render() {
+        const selectedVideoSource = this.state.selectedVideo.video.url;
+		const poster = this.state.selectedVideo.heroUrl;
+		const title = this.state.selectedVideo.title;
 
+        return (
+            <div className="player-surface">
+                <Video source={selectedVideoSource} 
+                       poster={poster}
+                       title={title} />
+
+                <VideoPicker>
+                    {this.renderThumbnails(this.props.videos)}
+                </VideoPicker>
+            </div>
+        );
+    }
+}
+PlayerSurface.defaultProps = {
+    videos: VIDEOS
+};
+```
+
+There are a few new things happening:
+
+### `handleThumbClick(videoId)`
+
+This is the click handler that we pass to a `<Thumbnail/>` component. Inside the function, we're using the browser history API to push a new state to the history. 
+**react-router** will then react to that state change and our React components will follow suit.
+
+### `renderThumbnails(videos)`
+
+This function is used to abstract some logic away from the `render()` method and make it more readable. It's best practice to chunk up separate logic like this into smaller functions.
+
+* The function provides us a `videos` object, which we then `map()` over, returning a new `<Thumbnail />` component for each element in `videos`.
+* We're passing various props to it as well. You should be familiar enough with props now to understand this, but I do want to point out:
+  * `onThumbClick` is passing the video ID via ES6 arrow function syntax.
+  * `isActive` is true when the currently playing video's ID is equal to the item of iteration
+
+### `render()`
+
+We render the `<Video/>` just as before, no changes there, but we are adding
+
+```jsx
+<VideoPicker>
+	{this.renderThumbnails(this.props.videos)}
+</VideoPicker>
+```
+
+This renders our VideoPicker component and passes the result of `renderThumbnails()` as children to VideoPicker.
+
+### `PlayerSurface.defaultProps`
 
 <hr />
 
