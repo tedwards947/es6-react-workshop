@@ -1450,7 +1450,21 @@ Here we're simply setting `this.props.videos` to `VIDEOS`, which is our static d
 
 **Note:** When you extend an ES6 class this way, it's critical that it goes after the class declaration. Unlike functions and variables in JavaScript, **classes are NOT hoisted**. 
 
+Run your project by doing `npm run build` and `npm run start-static` and try it out!
 
+## Is that all? 
+
+Congrats, we've now got a fully functional client-side video player webapp!
+
+We have a problem though. In the address bar in your browser, type `localhost:8080/video/3` and hit enter. 
+We expect it to go to the fourth video in our list, but instead we get nothing!
+
+# Universal JavaScript
+
+Luckily a solution is on the horizon. What's wrong is that we don't have a server that knows how to interperet the route `/videos/3`. Sure, the client can, but `http-server` is looking for that route in vain. 
+We need a server to solve our problems.
+
+Since React is just virtual dom etc etc
 
 <hr />
 
