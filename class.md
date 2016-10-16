@@ -1,17 +1,17 @@
 # Introduction to ES6 and ReactJS
 
-The goal of this workshop is to get you accquainted with ECMAScript 2015, otherwise known as
+The goal of this workshop is to get you acquainted with ECMAScript 2015, otherwise known as
 **<a href="http://www.ecma-international.org/ecma-262/6.0/">ES6</a>** _(<a href="http://es6-features.org/">quick ref</a>)_, and **<a href="https://facebook.github.io/react/">ReactJS</a>**. We'll build a client-side
 React app together, and then enhance it with universal rendering in **<a href="https://nodejs.org/">node.js</a>** (more on that later!)
 
 ## Goals 
 
-By the end of this session you should:
+By the end of this session you will:
 
 * Have a working React web application
 * Understand the most useful and interesting concepts of ES6
-* Be aware of ES6 compatibility issues and how to overcome them using Babel
-* Gain a cursory understanding of universal rendering and how to implement it easily
+* Be aware of ES6 compatibility issues and how to overcome them using <a href="TODO_BABEL_LINK">Babel</a>
+* Gain an understanding of universal rendering and how to implement it easily
 
 <!--Finish this!!-->
 For this tutorial, we'll be creating a small video player app. 
@@ -21,7 +21,7 @@ Don't worry if you're not familiar with these, I'll introduce them as we use the
 
 ## ES6
 
-ES6 is the latest version of the <a href="http://www.ecma-international.org/ecma-262/6.0/">ECMAScript standard</a>, and it supercedes ES5,
+ES6 is the latest version of the <a href="http://www.ecma-international.org/ecma-262/6.0/">ECMAScript standard</a>, and it supersedes ES5,
 which was standardized in 2009. A lot has changed since 2009: Internet Explorer 8 was the most popular
 browser, and IE represented the lion's share of usage at approximately 70% 
 _(source: <a href="https://en.wikipedia.org/wiki/Usage_share_of_web_browsers">Wikipedia</a>)_.
@@ -29,7 +29,7 @@ JavaScript's latest features are very interesting and go a long way to improve s
 some awesome new features.
 
 Unfortunately or fortunately, depending on your perspective, 
-ES6 has introduced breaking changes. While billions of devices can read and interperet JavaScript, 
+ES6 has introduced breaking changes. While billions of devices can read and interpret JavaScript, 
 from web browsers to servers to Raspberry Pi to "smart home" devices,
 it is important to be mindful that many of them don't currently or will never support ES6 syntax. 
 This shouldn't stop us from writing the latest code, though. 
@@ -41,11 +41,13 @@ Browser support is rapidly improving, and there is a workaround, **transpilation
 
 _These steps are written with MacOS in mind. If you have a different operating system, your mileage may vary._
 
+* _(If you don't have `git` installed, follow the instructions <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">here</a>)_
+
 * Clone this repository. In your terminal:
 
         git clone https://github.com/tedwards947/es6-react-workshop.git
 
-  _(If you don't have `git` installed, follow the instructions <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">here</a>)_
+
 
 ### **1. Install dependencies**
 
@@ -129,7 +131,7 @@ Each entry contains information about the video:
 * **`video.url`:** the URL of the actual video file
 * **`id`:** the ID of the video. For this example, they are numeric, but they needn't be.
 
-Notice how the URLs contain `localhost:8082`. This will point to the **http-server** instace you set running earlier on your machine. 
+Notice how the URLs contain `localhost:8082`. This will point to the **http-server** instance you set running earlier on your machine. 
 
 ### HTML Entry Point
 
@@ -189,11 +191,11 @@ document.writeln('</ol>');
 ```
 
 #### "Vanilla" JS _(ES6)_:
-Notice `let` instead of `var` and the new `for...of` loop
+Notice `let` instead of `var`, the new `for...of` loop, and string templating:
 ```JavaScript
 document.writeln('<ol>');
 for (let item of names){
-        document.writeln('<li>' + item + '</li>');
+        document.writeln(`<li>${item}</li>`);
 }
 document.writeln('</ol>');
 ```
@@ -315,7 +317,7 @@ and open a browser. Navigate to `http://localhost:8080` and you should see the n
 ## React State
 
 One of the best features of React is how it _reacts_ to changing application state. 
-Rather than having to imparatively update the DOM when a user, say, adds an item to a list, 
+Rather than having to imperatively update the DOM when a user, say, adds an item to a list, 
 React takes care of that for you because the underlying data changes. 
 
 To demonstrate that, let's take a look at an example. 
@@ -486,7 +488,7 @@ If we don't, `this` refers to the class definition instead of an instance, as we
 ## React Components
 
 React is fairly opinionated when it comes to the layout of code. Components are a way to package UI features into reusable and relatively atomic portions. 
-Let's componetize some of the example above.
+Let's componentize some of the example above.
 
 One obvious choice for componentization is the textbox and button. We should make that bit of UI a component for a few reasons:
 * It could be reused other places in our app, any time we wanted a textbox and a button
@@ -646,7 +648,7 @@ Now that you have a basic understanding of React's `state` and `props`, let's st
 
 <img src="./diagram.png"  width=680/>
 
-_(The red lines denote the boundries of React components.)_
+_(The red lines denote the boundaries of React components.)_
 
 * **Layout.jsx**: The wrapper parent component that contains the header and body of our app.
 * **PlayerSurface.jsx**: This component is the body of our app.
@@ -929,7 +931,7 @@ I'll start with `render()` and work my way backwards:
 
 * This is an example of a React <a href="https://facebook.github.io/react/docs/component-specs.html">"Lifecycle Method"</a>. Others will be introduced later.
 
-* This function is called after React has reacted to a change of state and has rerendered (if it needed to). It provides the previous state's props and states, so we can do some imperative logic with them.
+* This function is called after React has reacted to a change of state and has re-rendered (if it needed to). It provides the previous state's props and states, so we can do some imperative logic with them.
 
 * In this case, we're using it to check if the source changed from what it used to be. If it has, this means that the user has selected a different video
 
@@ -1059,7 +1061,7 @@ I'm going to start from the top of the file this time:
 	const videoIdFromRouter = this.props.params.id;
 	```
 
-  * Now that we have the video's ID, we'll pass it to our function `getVideoById()` to retrieve the cooresponding data map, and we set the component's state:
+  * Now that we have the video's ID, we'll pass it to our function `getVideoById()` to retrieve the corresponding data map, and we set the component's state:
 	```javascript
 	this.state = {
 		selectedVideo: this.getVideoById(this.props.videos, videoIdFromRouter)
@@ -1068,7 +1070,7 @@ I'm going to start from the top of the file this time:
 
 ### `getVideoById(videos, videoId)`
 
-This method accepts our data map and retrieves the entry that cooresponds to `videoId`. 
+This method accepts our data map and retrieves the entry that corresponds to `videoId`. 
 If we provide it an ID it doesn't recognize, it returns the first video.
 _(If we were shipping this app to production, we might want to have some error handling instead of just selecting the first video.)_
 
@@ -1153,7 +1155,7 @@ export default class Thumbnail extends React.Component {
 
 I'll start top-down again.
 
-* We're importing the **classnames** pacakge. This is a super useful library that affords us a little more power when adding CSS classes to React components.
+* We're importing the **classnames** package. This is a super useful library that affords us a little more power when adding CSS classes to React components.
 
 ### `render()`
 
@@ -1168,7 +1170,7 @@ I'll start top-down again.
 
 ### **A Quick Aside on String Templates**
 
-Rather than having to do string concatination in ES5:
+Rather than having to do string concatanation in ES5:
 ```javascript
 var numberOfMonths = 12;
 var myString = 'There are ' + numberOfMonths + ' months in a year';
@@ -1461,7 +1463,7 @@ We expect it to go to the fourth video in our list, but instead we get nothing!
 
 # Universal JavaScript
 
-Luckily a solution is on the horizon. What's wrong is that we don't have a server that knows how to interperet the route `/videos/3`. Sure, the client can, but `http-server` is looking for that route in vain. 
+Luckily a solution is on the horizon. What's wrong is that we don't have a server that knows how to interpret the route `/videos/3`. Sure, the client can, but `http-server` is looking for that route in vain. 
 We need a server to solve our problems.
 
 Since React is just virtual dom etc etc
@@ -1480,6 +1482,9 @@ Since React is just virtual dom etc etc
 
 
 
+<!-- unused at the moment but I could later:
 
-* The `key` attribute is special to React. By assigning a unique ID to a list of compoents, React can more easily keep track of changes to the DOM. Note: the key only has to be unique to the component rendering it, not to the entire app. 
+* The `key` attribute is special to React. By assigning a unique ID to a list of components, React can more easily keep track of changes to the DOM. Note: the key only has to be unique to the component rendering it, not to the entire app. 
 Because of this, we can simply use the array index from `.map()`.
+
+-->
