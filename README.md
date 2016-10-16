@@ -52,19 +52,14 @@ _These steps are written with MacOS in mind. If you have a different operating s
 
 ##### Option 1: _(preferred)_
 
-* Install **babel**, **express**, **react**, and **react-router**:
+* Install the dependencies, **babel**, **express**, **react**, **react-router**, **classnames**, **webpack**, **babel-loader**, and **http-server**.
 
-        npm install --save babel-cli@6.11.4 babel-core@6.13.2  \
-            babel-preset-es2015@6.13.2 babel-preset-react@6.11.1 ejs@2.5.2 \
-            express@4.14.0 react@15.3.1 react-dom@15.3.1 react-router@2.6.1
+  From the directory you checked the project out to, in your terminal, do:
+  ```
+  npm install
+  ```
 
-* Install other fun stuff like **classnames**, **urijs**
-
-        npm install --save classnames@2.2.5 urijs@1.18.1
-
-* Install **webpack**, **babel-loader**, and **http-server** as development dependencies:
-
-        npm install --save-dev webpack@1.13.2 babel-loader@6.2.5 http-server@0.9.0
+  This tells **npm** to install the dependencies found in the project's `package.json` file.
 
 ##### Option 2: _(if npm install is being difficult due to poor connectivity)_
 
@@ -98,7 +93,7 @@ You should see output very similar to this:
 ```
 Starting up http-server, serving ./assets
 Available on:
-        http://<your IP>:8082
+        http://localhost:8082
 Hit CTRL-C to stop the server
 ```
 
@@ -202,7 +197,7 @@ document.writeln('</ol>');
 We can also take a more functional approach and shave off 2 lines:
 ```JavaScript
 document.writeln('<ol>');
-names.forEach(item => document.writeln('<li>' + item + '</li>'));
+names.forEach(item => document.writeln(`<li>${item}</li>`));
 document.writeln('</ol>');
 ```
 
