@@ -1466,9 +1466,49 @@ We expect it to go to the fourth video in our list, but instead we get nothing!
 Luckily a solution is on the horizon. What's wrong is that we don't have a server that knows how to interpret the route `/videos/3`. Sure, the client can, but `http-server` is looking for that route in vain. 
 We need a server to solve our problems.
 
-Since React is just virtual dom etc etc
+Since React doesn't directly work with the _real_ DOM, but instead uses a virtual, in memory construction of one, 
+there's nothing stopping us from pre-rendering React on a server & shipping the rendered code to the client.
+This gives the client a performance boost, since there's no need to wait for React to bootstrap itself. 
+For simple static and multi-page, form-based apps, this means that you might not even need to send JS to the client at all!
+
+We're using node and <a href="TODO_LINK_TO_REACT">**Express**</a> for this tutorial. 
+Since this is a React and ES6 workshop and not a NodeJS one, I'm going to move quickly through the explanation.
+
+Take a quick look at `src/views/index.ejs`. This is very similar to our `index.html` from earlier, but we're using a templating markup:
+
+```html
+<div id="main"><%- markup -%></div>
+```
+In the server code, we'll replace `<%- markup -%>` with our main React component.
+
+## The Server
+
+Open `src/server.js` in your editor. The magic happens on line 39:
+```javascript 
+markup = renderToString(<RouterContext {...renderProps}/>);
+```
+
+`renderToString` uses React to render HTML for us. Later on, on line 47:
+```javascript
+return res.render('index', { markup });
+```
+We send the rendered markup down to the client, replacing the template placeholder in `index.esj`.
+
+That's pretty much it. 
+It takes ~60 lines of code _(it would be a lot less without whitespace and comments)_ to render a universal React webapp!
+
+Let's give it a spin. In your terminal, do:
+```
+npm run start
+```
+
+The server should start up, running off of port 3000. In your browser, hit `localhost:3000`.
+
+The app's functionality should be identical, but you can now also change the current video by changing the video ID in the URL.
+Turn off JavaScript in your browser and load the page. While it's not interactive (it takes JS to run), it does completely render.
 
 <hr />
+
 
 # A special thanks...
 * To Luciano Mammino _(<a href="https://twitter.com/loige">Twitter</a>)_ for his wonderful article <a href="https://scotch.io/tutorials/react-on-the-server-for-beginners-build-a-universal-react-and-node-app">React on the Server for Beginners: Build a Universal React and Node App"</a> for refreshing my memory on how to make a universal JS webapp from scratch.
