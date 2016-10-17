@@ -448,7 +448,7 @@ class Home extends React.Component {
 				
 				<input type="button"
 					   onClick={this.handleButtonClick}
-					   value="Add Name" />}
+					   value="Add Name" />
 
 				<ol>
 					{this.state.names.map(name => {
@@ -489,7 +489,7 @@ One obvious choice for componentization is the textbox and button. We should mak
 * We can more easily reason what that bit of code does, because its inputs and outputs are restricted
 * It makes the code more maintainable and readable
 
-We'll rip out the two `<input>` tags and replace them with a component!
+Let's rip out the two `<input>` tags and replace them with a component!
 
 Once again, edit `client.jsx`:
 
@@ -656,8 +656,8 @@ It houses the video and the thumbnail picker, as well as acting as the controlle
 
 We'll take things a bit further by making this a single page app.
 When a user selects a different video, we'll update the URL in the browser. Updating the URL will trigger the video to change.
-In this app, this provides a streamlined way to share the URL to friends and drive them to the video:
-`/video/5`, where "5" is the ID of the video. This URL change will not require a call to the server, so that's why it's called a "Single Page App".
+In this app, this provides a streamlined way to share the URL to friends and send them directly to the video:
+`/video/5`, where "5" is the ID of the video. This URL change will not require a page reload, so that's why it's called a "single page app".
 
 ## Introducing React Router
 
@@ -771,7 +771,9 @@ export default class Layout extends React.Component {
 
 * Our `<header>` is static in this case, but it doesn't have to be. More complex apps could have an entire navigation component included here, for example.
 
-* Notice `{this.props.children}`. Earlier, in `Routes.jsx`, you saw that we had components nested inside other components, just like real HTML. The same goes with React. Components nested in this fashion are passed to their children via `this.props.children`. The developer is responsible for implementing rendering them. 
+* Notice `{this.props.children}`. Earlier, in `Routes.jsx`, you saw that we had components nested inside other components, just like real HTML. The same goes with React. 
+Components nested in this fashion are passed to their children, and accessible via `this.props.children`. 
+The developer is responsible for implementing rendering them. 
 
 ## PlayerSurface
 
@@ -779,12 +781,19 @@ We'll be coming back to this file later, but for now, in `src/components`, creat
 
 ```jsx
 import React from 'react';
+import { Link } from 'react-router';
+
 export default class PlayerSurface extends React.Component {
     render() {
         return (
 			<div>
-				<span>Hello world!</span>
-				<span>The value of <pre>:id</pre> is {this.props.params.id}.</span>
+				<div>Hello world!</div>
+
+                <Link to="/video">Go to /video</Link> 
+                <Link to="/video/1">Go to /video/1</Link> 
+                <Link to="/video/2">Go to /video/2</Link> 
+
+				<div>The value of :id is {this.props.params.id}.</div>
 			</div>
 		);
 	}
@@ -795,7 +804,7 @@ export default class PlayerSurface extends React.Component {
 
 ## NotFound
 
-Our 404 page is simple enough:
+Our 404 page is simple enough. Create & open `src/components/NotFound.jsx`:
 
 ```jsx
 import React from 'react';
@@ -814,7 +823,7 @@ export default class NotFound extends React.Component {
 }
 ```
 
-* Simple enough. Notice though that we provide a `<Link to="/">` to allow the user an easy way home.
+* Notice how we provide a `<Link to="/">` to allow the user an easy way home. `<Link>` is a **react-router** way of linking to different pages.
 
 ## Hello World?
 
@@ -843,8 +852,7 @@ and
 npm run start-static
 ```
 
-Navigate to `localhost:8080` to (hopefully) see "Hello World!" If that works, try typing a bogus route like `localhost:8080/foobar`, and see how our 404 page works. 
-After that, go to `localhost:8080/video` and `localhost:8080/video/2` to see how the params are written to the page.
+Navigate to `localhost:8080` to (hopefully) see "Hello World!" If that works, try clicking the `<Link>`s to see how the params are written to the page.
 
 <hr/>
 
@@ -882,6 +890,7 @@ export default class Video extends React.Component {
     }
 
     render() {
+        const TYPE = 'video/mp4';
         return (
             <div className="video-wrapper" onClick={this.togglePlayState}>
                 <h3>{this.props.title}</h3>
@@ -936,7 +945,7 @@ I'll start with `render()` and work my way backwards:
 ### **A Quick Aside on Refs**
 
 It's often important to have a reference to a DOM element directly. While in general you should use React's way of reacting to state to drive changes in your application,
-there might be times where you simply cannot avoid working with the element itself. One example of this is when you need to call functions on the element itself. 
+there might be times where you simply cannot avoid working with the element itself. One example of this is when you need to call functions on a DOM element. 
 
 Here's how this works:
 
@@ -971,7 +980,7 @@ After it's mounted & our element is now added to our React component object, we 
 Go back and open `src/components/PlayerSurface.jsx`. Enter the following:
 
 ```jsx
-iimport React from 'react';
+import React from 'react';
 
 import Video from './Video.jsx';
 import videos from '../data/data.js';
@@ -1077,7 +1086,8 @@ Here we're using it to react to **react-router** changing the ID when we navigat
 
 ### `render()`
 
-* First, I'm storing values with a long path in `const`s to make the JSX appear cleaner. This is just a style thing, and it's not at all required.
+* First, I'm storing values with a long path in `const`s to make the JSX appear cleaner. 
+This is just a style thing, and it's not at all required.
 
 * Within the wrapper `<div>`, I've created a quick test button that will allow us to switch videos without a video picker.
   Notice that `this` means the react component. Had I written this function in ES5, it would look like:
@@ -1091,9 +1101,9 @@ Here we're using it to react to **react-router** changing the ID when we navigat
 	}}
   ```
 	but `this` would **not** refer to the React component, but rather the click handler function. We'd have to use `bind(this)` to get the correct value of `this`.
-	With ES6 arrow function syntax, `this` is the value we expect.
+	However, with ES6 arrow function syntax, `this` is the value we expect.
 
-* We're then including our `<Video` component and passing the props it expects.
+* We're then including our `<Video>` component and passing the props it expects.
 
 We've now got enough written to test it out again! Do:
 
@@ -1159,8 +1169,9 @@ I'll start top-down again.
     * `thumbnail-clickable` will only be applied if a click handler is passed as a prop to this component. If there's no click handler passed to `Thumbnail`, then the CSS class `thumbnail-clickable` will not be applied.
 	* `thumbnail-active` will be applied if `this.props.isActive` is truthy. 
 * Since we're going to set a background image on this element, we need to use JS to set it imperatively. Working with styles in React isn't difficult at all.
-  * Notice that I use `backgroundImage` instead of `background-image` like you might expect in CSS. This is because React is working with the underlying DOM element and **not** with CSS. Prove this to yourself by inspecting the contents of a native DOM element's `style` property. 
-  * I'm also using one of my favorite ES6 features: String templating!
+  * Notice that I use `backgroundImage` instead of `background-image` like you might expect in CSS. This is because React is working with the underlying DOM element and **not** with CSS. 
+    Prove this to yourself by inspecting the contents of a native DOM element's `style` property. **Anything you're used to that uses kebab case (for example, `this-is-kebab-case`), 
+    you will need to convert to camel case (`thisIsCamelCase`).
 
 ### **A Quick Aside on String Templates**
 

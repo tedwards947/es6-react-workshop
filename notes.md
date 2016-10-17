@@ -5,5 +5,7 @@
 * make checkpoint branches
 * copy to a new folder, wipe everything away, make sure these instructions are follow-able
 * clear out TODO 's!
+* update the readme in the `first` branch, first
+  * push the git branch 'first', copy it to the flash drive
 
 
