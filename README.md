@@ -201,9 +201,29 @@ names.forEach(item => document.writeln(`<li>${item}</li>`));
 document.writeln('</ol>');
 ```
 
+<hr/>
+
+#### **An aside on string templates**
+
+Rather than having to do string concatanation in ES5:
+```javascript
+var numberOfMonths = 12;
+var myString = 'There are ' + numberOfMonths + ' months in a year';
+```
+
+ES6 offers us some nice syntactic sugar to help:
+```javascript
+const numberOfMonths = 12;
+const myString = `There are ${numberOfMonths} months in a year`;
+```
+**Important:** This is the backtick (\`) character, not a single quote. 
+
+JavaScript will automatically replace `${numberOfMonths}` with the value of `numberOfMonths` for us! Magic!
+
+
 <hr>
 
-#### A quick aside on `const` and `let`:
+#### An aside on `const` and `let`:
 **There is no longer a valid use case for `var`**. The new `const` and `let` fix the issue with variables hoisted outside of blocks into function scope,
 as well as a few other issues.
 
@@ -1173,23 +1193,6 @@ I'll start top-down again.
     Prove this to yourself by inspecting the contents of a native DOM element's `style` property. **Anything you're used to that uses kebab case (for example, `this-is-kebab-case`), 
     you will need to convert to camel case (`thisIsCamelCase`).
 
-### **A Quick Aside on String Templates**
-
-Rather than having to do string concatanation in ES5:
-```javascript
-var numberOfMonths = 12;
-var myString = 'There are ' + numberOfMonths + ' months in a year';
-```
-
-ES6 offers us some nice syntactic sugar to help:
-```javascript
-const numberOfMonths = 12;
-const myString = `There are ${numberOfMonths} months in a year`;
-```
-**Important:** This is the backtick (\`) character, not a single quote. 
-
-JavaScript will automatically replace `${numberOfMonths}` with the value of `numberOfMonths` for us! Magic!
-
 ### `render()` again
 
 * We're now rendering a `<div>` and passing it:
@@ -1429,7 +1432,7 @@ This function is used to abstract some logic away from the `render()` method and
 
 ### `render()`
 
-We render the `<Video/>` just as before, no changes there, but we are adding
+We render the `<Video/>` just as before, no changes there, but we are adding:
 
 ```jsx
 <VideoPicker>
