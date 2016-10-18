@@ -46,6 +46,12 @@ _These steps are written with MacOS in mind. If you have a different operating s
 
         git clone https://github.com/tedwards947/es6-react-workshop.git
 
+* If you're following along, do:
+
+        git checkout first 
+
+    This will give you a clean place to start.
+
 
 
 ### **1. Install dependencies**
@@ -1527,12 +1533,6 @@ Turn off JavaScript in your browser and load the page. While it's not interactiv
 * The `key` attribute is special to React. By assigning a unique ID to a list of components, React can more easily keep track of changes to the DOM. Note: the key only has to be unique to the component rendering it, not to the entire app. 
 Because of this, we can simply use the array index from `.map()`.
 
--->
-
-
-<!-- unused at the moment but I could later:
-
-* The `key` attribute is special to React. By assigning a unique ID to a list of components, React can more easily keep track of changes to the DOM. Note: the key only has to be unique to the component rendering it, not to the entire app. 
-Because of this, we can simply use the array index from `.map()`.
+-->ause of this, we can simply use the array index from `.map()`.
 
 -->
