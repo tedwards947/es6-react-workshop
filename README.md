@@ -61,13 +61,9 @@ _These steps are written with MacOS in mind. If you have a different operating s
 
   This tells **npm** to install the dependencies found in the project's `package.json` file.
 
-##### Option 2: _(if npm install is being difficult due to poor connectivity)_
+##### Option 2: _(If at a physical workshop)_
 
-* Open a web browser and navigate to 
-
-        http://x.x.x.x:8080/node_modules.zip
-
-* Move the zip file to the directory you just cloned from GitHub and extract it.
+* Copy `node_modules.zip` from my flash drive to the directory you just cloned from GitHub and extract it.
 
 
 ### **2. Get Assets**
@@ -77,11 +73,7 @@ You need to host the images and videos used in this workshop locally.
 _(If you're doing these steps outside the context of
 a physical workshop, you'll need to come up with your own assets (try archive.org) and adjust the `data.js` file accordingly.)_
 
-* Open a web browser and navigate to 
-
-        http://x.x.x.x:8080/assets.zip
-
-* Move the zip file to the directory you just cloned from GitHub and extract it.
+* Copy `assets.zip` from my flash drive to the directory you just cloned from GitHub and extract it.
 
 We're going to use the npm package **http-server** to act as a simple CDN _(content delivery network)_ for us.
 * In your terminal, from within the `es6-react-workshop` directory, do:
