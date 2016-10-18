@@ -46,6 +46,12 @@ _These steps are written with MacOS in mind. If you have a different operating s
 
         git clone https://github.com/tedwards947/es6-react-workshop.git
 
+* If you're following along, do:
+
+        git checkout first 
+
+    This will give you a clean place to start.
+
 
 
 ### **1. Install dependencies**
