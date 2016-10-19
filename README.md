@@ -10,7 +10,7 @@ By the end of this session you will:
 
 * Have a working React web application
 * Understand the most useful and interesting concepts of ES6
-* Be aware of ES6 compatibility issues and how to overcome them using <a href="TODO_BABEL_LINK">Babel</a>
+* Be aware of ES6 compatibility issues and how to overcome them using <a href="https://babeljs.io/">Babel</a>
 * Gain an understanding of universal rendering and how to implement it easily
 
 For this tutorial, we'll be creating a small video player app. 
@@ -1477,7 +1477,7 @@ there's nothing stopping us from pre-rendering React on a server & shipping the 
 This gives the client a performance boost, since there's no need to wait for React to bootstrap itself. 
 For simple static and multi-page, form-based apps, this means that you might not even need to send JS to the client at all!
 
-We're using node and <a href="TODO_LINK_TO_REACT">**Express**</a> for this tutorial. 
+We're using node and <a href="https://expressjs.com/">**Express**</a> for this tutorial. 
 Since this is a React and ES6 workshop and not a NodeJS one, I'm going to move quickly through the explanation.
 
 Take a quick look at `src/views/index.ejs`. This is very similar to our `index.html` from earlier, but we're using a templating markup:
@@ -1532,7 +1532,5 @@ Turn off JavaScript in your browser and load the page. While it's not interactiv
 
 * The `key` attribute is special to React. By assigning a unique ID to a list of components, React can more easily keep track of changes to the DOM. Note: the key only has to be unique to the component rendering it, not to the entire app. 
 Because of this, we can simply use the array index from `.map()`.
-
--->ause of this, we can simply use the array index from `.map()`.
 
 -->
